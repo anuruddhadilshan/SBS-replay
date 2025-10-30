@@ -885,3 +885,39 @@ sbs.gemFT.m13.chanmap =
       20   14  14   0  10   0  10   0    1 # Strip 
       20   14  14   0  11   0  11   0    1 # Strip
       
+############### Parameters searched by SBSGEMSpectrometerTracker::ReadDatabase() ######################
+# Parameters controlling 1D clustering and 2D hit finding (updating for replay with background)
+sbs.gemFT.useopticsconstraint = 1
+sbs.gemFT.ADCasym_cut = 0.8 
+sbs.gemFT.deltat_cut = 25.0
+sbs.gemFT.corrcoeff_cut = 0.5
+
+sbs.gemFT.peakprominence_minsigma = 2.0
+sbs.gemFT.peakprominence_minfraction = 0.1
+# change to "soft hit filtering:
+sbs.gemFT.filterflag1D = 0 # -1 = no filtering: don't require 1D hits to pass any cuts other than basic zero suppression
+sbs.gemFT.filterflag2D = 0  # 1 = "hard" filtering: require 2D hits to pass all cuts
+
+sbs.gemFT.use_enhanced_chi2 = 1
+sbs.gemFT.trackchi2cut_hitquality = 12.0
+
+# Parameters controlling tracking:
+sbs.gemFT.minhitsontrack = 4
+
+sbs.gemFT.maxhitcombos = 25000 
+sbs.gemFT.maxhitcombos_inner = 25000 
+sbs.gemFT.maxhitcombos_total = 1.e24
+
+sbs.gemFT.gridbinwidthx = 0.005
+sbs.gemFT.gridbinwidthy = 0.005
+sbs.gemFT.gridedgetolerancex = 0.0015
+sbs.gemFT.gridedgetolerancey = 0.0015
+
+
+sbs.gemFT.efficiency_bin_width_1D = 0.02
+sbs.gemFT.efficiency_bin_width_2D = 0.04
+sbs.gemFT.do_efficiencies = 1
+
+sbs.gemFT.trackchi2cut = 15 20 25 30 40
+
+sbs.gemFT.suppressfirstlast = -1
