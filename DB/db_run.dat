@@ -295,6 +295,7 @@ bb.magdist = 1.5515
 #ebeam = 6.476
 # estimate beam energy from HALLA:p after beam startup.
 ebeam = 6.466 
+experiment = gep
 
 # nominal kinematics for SBS:
 sbs.theta = -25.7
@@ -318,6 +319,8 @@ earm.ecaldist = 8.14
 --------[ 2025-05-05 00:00:00 ] # Start GEP Kin. 3
 
 ebeam = 10.688
+experiment = gep
+
 sbs.theta = -18.6
 sbs.pcentral = 6.8
 sbs.magdist = 1.628 # might need to change to 1.62 pending survey results
