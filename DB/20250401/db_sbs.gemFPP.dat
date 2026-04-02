@@ -3913,10 +3913,13 @@ sbs.gemFPP.zerosuppress_nsigma = 3.5
 
 ---------[ 2025-05-29 20:40:00 ] # Multi-foil optics runs. SBS current 1756.5 A (same as production). Beam currents 1-1.5 uA. Used 4 foil and 2 foil optics targets with the corresponding run numbes 4200 and 4203. 
 sbs.gemFPP.multitracksearch=0
+sbs.gemFPP.usestriptimingcut = 0
+sbs.gemFPP.suppressfirstlast = 0
 
 ---------[ 2025-05-30 00:45:00 ] # Back to production running.
 sbs.gemFPP.multitracksearch=1
-
+sbs.gemFT.usestriptimingcut = 1
+sbs.gemFT.suppressfirstlast = -1
 
 ---------[ 2025-07-21 22:50:00 ] # thresholds based on 3550 V data for run 5415:
 

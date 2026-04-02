@@ -2,9 +2,12 @@
 
 ## A chamber is a "Tracker-Plane" composed of vertically stacked modules
 sbs.gemFT.is_mc = 1
-sbs.gemFT.onlinezerosuppress = 0
+sbs.gemFT.onlinezerosuppress = 1 
+sbs.gemFT.pedsub_online = 0     
 sbs.gemFT.pedestalmode = 0
 sbs.gemFT.commonmode_flag = -1
+
+
 sbs.gemFT.modules = m0  m1  m2  m3  m4  m5  m6 m7 m8 m9  m10 m11 m12 m13
 
 sbs.gemFT.useconstraint = 1
@@ -40,7 +43,7 @@ sbs.gemFT.ADCasym_cut = 0.8
 sbs.gemFT.deltat_cut = 50.0
 sbs.gemFT.filterflag1D = -1
 sbs.gemFT.filterflag2D = -1
-
+ 
 sbs.gemFT.threshold_stripsum = 240
 sbs.gemFT.threshold_sample = 100
 sbs.gemFT.threshold_clustersum = 400.0
@@ -55,75 +58,75 @@ sbs.gemFT.maxnv_charge = 4
 sbs.gemFT.maxnu_pos = 2
 sbs.gemFT.maxnv_pos = 2
 
-sbs.gemFT.m0.pedu = 1500
-sbs.gemFT.m0.rmsu = 8
-sbs.gemFT.m0.pedv = 1500
-sbs.gemFT.m0.rmsv = 8
+# sbs.gemFT.m0.pedu = 1500
+# sbs.gemFT.m0.rmsu = 8
+# sbs.gemFT.m0.pedv = 1500
+# sbs.gemFT.m0.rmsv = 8
 
-sbs.gemFT.m1.pedu = 1500
-sbs.gemFT.m1.rmsu = 8
-sbs.gemFT.m1.pedv = 1500
-sbs.gemFT.m1.rmsv = 8
+# sbs.gemFT.m1.pedu = 1500
+# sbs.gemFT.m1.rmsu = 8
+# sbs.gemFT.m1.pedv = 1500
+# sbs.gemFT.m1.rmsv = 8
 
-sbs.gemFT.m2.pedu = 1500
-sbs.gemFT.m2.rmsu = 8
-sbs.gemFT.m2.pedv = 1500
-sbs.gemFT.m2.rmsv = 8
+# sbs.gemFT.m2.pedu = 1500
+# sbs.gemFT.m2.rmsu = 8
+# sbs.gemFT.m2.pedv = 1500
+# sbs.gemFT.m2.rmsv = 8
 
-sbs.gemFT.m3.pedu = 1500
-sbs.gemFT.m3.rmsu = 8
-sbs.gemFT.m3.pedv = 1500
-sbs.gemFT.m3.rmsv = 8
+# sbs.gemFT.m3.pedu = 1500
+# sbs.gemFT.m3.rmsu = 8
+# sbs.gemFT.m3.pedv = 1500
+# sbs.gemFT.m3.rmsv = 8
 
-sbs.gemFT.m4.pedu = 1500
-sbs.gemFT.m4.rmsu = 8
-sbs.gemFT.m4.pedv = 1500
-sbs.gemFT.m4.rmsv = 8
+# sbs.gemFT.m4.pedu = 1500
+# sbs.gemFT.m4.rmsu = 8
+# sbs.gemFT.m4.pedv = 1500
+# sbs.gemFT.m4.rmsv = 8
 
-sbs.gemFT.m5.pedu = 1500
-sbs.gemFT.m5.rmsu = 8
-sbs.gemFT.m5.pedv = 1500
-sbs.gemFT.m5.rmsv = 8
+# sbs.gemFT.m5.pedu = 1500
+# sbs.gemFT.m5.rmsu = 8
+# sbs.gemFT.m5.pedv = 1500
+# sbs.gemFT.m5.rmsv = 8
 
-sbs.gemFT.m6.pedu = 1500
-sbs.gemFT.m6.rmsu = 8
-sbs.gemFT.m6.pedv = 1500
-sbs.gemFT.m6.rmsv = 8
+# sbs.gemFT.m6.pedu = 1500
+# sbs.gemFT.m6.rmsu = 8
+# sbs.gemFT.m6.pedv = 1500
+# sbs.gemFT.m6.rmsv = 8
 
-sbs.gemFT.m7.pedu = 1500
-sbs.gemFT.m7.rmsu = 8
-sbs.gemFT.m7.pedv = 1500
-sbs.gemFT.m7.rmsv = 8
+# sbs.gemFT.m7.pedu = 1500
+# sbs.gemFT.m7.rmsu = 8
+# sbs.gemFT.m7.pedv = 1500
+# sbs.gemFT.m7.rmsv = 8
 
-sbs.gemFT.m8.pedu = 1500
-sbs.gemFT.m8.rmsu = 8
-sbs.gemFT.m8.pedv = 1500
-sbs.gemFT.m8.rmsv = 8
+# sbs.gemFT.m8.pedu = 1500
+# sbs.gemFT.m8.rmsu = 8
+# sbs.gemFT.m8.pedv = 1500
+# sbs.gemFT.m8.rmsv = 8
 
-sbs.gemFT.m9.pedu = 1500
-sbs.gemFT.m9.rmsu = 8
-sbs.gemFT.m9.pedv = 1500
-sbs.gemFT.m9.rmsv = 8
+# sbs.gemFT.m9.pedu = 1500
+# sbs.gemFT.m9.rmsu = 8
+# sbs.gemFT.m9.pedv = 1500
+# sbs.gemFT.m9.rmsv = 8
 
-sbs.gemFT.m10.pedu = 1500
-sbs.gemFT.m10.rmsu = 8
-sbs.gemFT.m10.pedv = 1500
-sbs.gemFT.m10.rmsv = 8
+# sbs.gemFT.m10.pedu = 1500
+# sbs.gemFT.m10.rmsu = 8
+# sbs.gemFT.m10.pedv = 1500
+# sbs.gemFT.m10.rmsv = 8
 
-sbs.gemFT.m11.pedu = 1500
-sbs.gemFT.m11.rmsu = 8
-sbs.gemFT.m11.pedv = 1500
-sbs.gemFT.m11.rmsv = 8
+# sbs.gemFT.m11.pedu = 1500
+# sbs.gemFT.m11.rmsu = 8
+# sbs.gemFT.m11.pedv = 1500
+# sbs.gemFT.m11.rmsv = 8
 
-sbs.gemFT.m12.pedu = 1500
-sbs.gemFT.m12.rmsu = 8
-sbs.gemFT.m12.pedv = 1500
-sbs.gemFT.m12.rmsv = 8
+# sbs.gemFT.m12.pedu = 1500
+# sbs.gemFT.m12.rmsu = 8
+# sbs.gemFT.m12.pedv = 1500
+# sbs.gemFT.m12.rmsv = 8
 
-sbs.gemFT.m13.pedu = 1500
-sbs.gemFT.m13.rmsu = 8
-sbs.gemFT.m13.pedv = 1500
-sbs.gemFT.m13.rmsv = 8
+# sbs.gemFT.m13.pedu = 1500
+# sbs.gemFT.m13.rmsu = 8
+# sbs.gemFT.m13.pedv = 1500
+# sbs.gemFT.m13.rmsv = 8
 
 
 sbs.gemFT.m0.layer = 0
@@ -884,6 +887,9 @@ sbs.gemFT.m13.chanmap =
       20   14  14   0   9   0   9   0    1 # Strip 1152-1279
       20   14  14   0  10   0  10   0    1 # Strip 
       20   14  14   0  11   0  11   0    1 # Strip
+
+
+#
       
 ############### Parameters searched by SBSGEMSpectrometerTracker::ReadDatabase() ######################
 # Parameters controlling 1D clustering and 2D hit finding (updating for replay with background)
@@ -921,3 +927,20 @@ sbs.gemFT.do_efficiencies = 1
 sbs.gemFT.trackchi2cut = 15 20 25 30 40
 
 sbs.gemFT.suppressfirstlast = -1
+
+
+## Ped and CM files for testing FT digitzation w/ varying ped and CM.
+sbs.gemFT.pedfile = gemped/mcreplay_out_pedfile.dat
+sbs.gemFT.cmfile = gemped/mcreplay_out_pedfile.dat
+
+## TESTING 'full r/o' digitzatoin.
+sbs.gemFT.onlinezerosuppress = 1 #1 #0
+sbs.gemFT.zerosuppress = 1 #1
+sbs.gemFT.pedsub_online = 1 #1 #0  #Pedestal offsets are NOT included in digitization now. ADR.
+sbs.gemFT.pedestalmode = 0
+sbs.gemFT.commonmode_flag = -1 #-1 #0
+#sbs.gemFT.commonmode_minstrips = 5
+sbs.gemFT.chan_cm_flags = 640 # defines the "dummy" reference channel for storing the cm_enable and build_all_samples flags -(40 x 16) "sbsvtp2" and "sbsvtp4"currently has 36 and 20 MPDs respectively right now. 
+sbs.gemFT.commonmode_nstriplo = 10 # for sorting method
+sbs.gemFT.commonmode_nstriphi = 50 # for sorting method... for an occupancy ~40%
+#sbs.gemFT.tryfasttrack = 0

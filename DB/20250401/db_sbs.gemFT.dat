@@ -2472,6 +2472,10 @@ sbs.gemFT.useslopeconstraint=0
 sbs.gemFT.constraintwidth_theta = 0.06
 sbs.gemFT.constraintwidth_phi = 0.06
 
+sbs.gemFT.usestriptimingcut = 0
+sbs.gemFT.suppressfirstlast = 0
+
+
 
 ---------[ 2025-05-30 00:45:00 ] # Back to production running.
 sbs.gemFT.multitracksearch=1
@@ -2481,6 +2485,9 @@ sbs.gemFT.useslopeconstraint=1
 sbs.gemFT.useelasticconstraint = 1
 sbs.gemFT.constraintwidth_theta = 0.02
 sbs.gemFT.constraintwidth_phi = 0.03
+
+sbs.gemFT.usestriptimingcut = 1
+sbs.gemFT.suppressfirstlast = -1
 
 
 #######################################################################################

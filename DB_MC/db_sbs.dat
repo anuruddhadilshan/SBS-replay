@@ -391,7 +391,7 @@ sbs.forwardoptics_parameters =
 
 # set initial constraint offsets and widths for testing:
 # start with the same as we used for GEP-1:
-
+# Set to back to front tracking.
 sbs.geptrackingflag = 1
 
 sbs.frontconstraint_x0 = 0.0 0.0
