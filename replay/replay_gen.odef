@@ -5,7 +5,7 @@
 #include "replay_BBGEM_light.odef"
 #include "replay_BBCal.odef"
 #include "replay_grinch.odef"
-#include "replay_hcal.odef"
+#include "replay_hcal_GEn.odef"
 #include "replay_hodo.odef"
 #include "replay_bb.odef"
 #include "replay_sbs.odef"

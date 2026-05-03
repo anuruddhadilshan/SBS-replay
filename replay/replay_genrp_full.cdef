@@ -14,8 +14,8 @@ Block: Decode
 Decode_master 1
 
 Block: CoarseReconstruct
-GoodHCALtime (g.trigbits==1||g.trigbits==4)&&sbs.hcal.nclus>0&&bb.sh.nclus>0&&abs(sbs.hcal.atimeblk-bb.sh.atimeblk-42.)<16.0&&sbs.hcal.e>0.02 
-#GoodHCALtime sbs.hcal.nclus>0&&bb.sh.nclus>0&&abs(sbs.hcal.atimeblk-bb.sh.atimeblk-58.)<36.0&&sbs.hcal.e>0.02 
+#GoodHCALtime (g.trigbits==1||g.trigbits==4)&&sbs.hcal.nclus>0&&bb.sh.nclus>0&&abs(sbs.hcal.atimeblk-bb.sh.atimeblk-42.)<16.0&&sbs.hcal.e>0.02 
+GoodHCALtime (g.trigbits==1||g.trigbits==4)&&sbs.hcal.nclus>0&&bb.sh.nclus>0&&abs(sbs.hcal.atimeblk-bb.sh.atimeblk-0.)<22.0&&sbs.hcal.e>0.02 
 CoarseReconstruct_master GoodHCALtime
 #CoarseReconstruct_master 1
 
