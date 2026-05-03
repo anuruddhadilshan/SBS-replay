@@ -257,10 +257,13 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     
     TFile *fout = new TFile(outfilename,"RECREATE");
 
+
     C->SetBranchStatus("*",0);
 
+    C->SetBranchStatus("g.runnum",1);
+    
     //BigBite Tracking branches:
-    C->SetBranchStatus("bb.tr.n",1);
+    C->SetBranchStatus("bb.tr.*",1);
     C->SetBranchStatus("bb.tr.vz",1);
     C->SetBranchStatus("bb.tr.px",1);
     C->SetBranchStatus("bb.tr.py",1);
@@ -273,6 +276,7 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     C->SetBranchStatus("bb.tr.*",1);
 
     C->SetBranchStatus("bb.gem.track.nhits",1);
+    C->SetBranchStatus("bb.gem.track.ngoodhits",1);
     C->SetBranchStatus("bb.gem.track.chi2ndf",1);
     
     const int MAXNTRACKS = 100;
@@ -307,7 +311,7 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     //don't need to set the branch address for W2 (we aren't going to use it directly)
 
     //SBS Tracking branches:
-    C->SetBranchStatus("sbs.tr.n",1);
+    C->SetBranchStatus("sbs.tr.*",1);
     C->SetBranchStatus("sbs.tr.vz",1);
     C->SetBranchStatus("sbs.tr.px",1);
     C->SetBranchStatus("sbs.tr.py",1);
@@ -327,6 +331,7 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     C->SetBranchStatus("sbs.tr.tg_ph",1);
     //These branches should only be used for cuts. The above branches are suitable for all other purposes for either the straight-through or polarimeter cases:
     C->SetBranchStatus("sbs.gem.track.nhits",1);
+    C->SetBranchStatus("sbs.gem.track.ngoodhits",1);
     C->SetBranchStatus("sbs.gem.track.chi2ndf",1);
     
     
@@ -362,6 +367,7 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     
     
     //BigBite calorimeter branches:
+    C->SetBranchStatus("bb.etot_over_p",1);
     C->SetBranchStatus("bb.ps.e",1);
     C->SetBranchStatus("bb.sh.e",1);
     C->SetBranchStatus("bb.ps.atimeblk",1);
@@ -386,6 +392,9 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     C->SetBranchAddress("sbs.hcal.y",&yHCAL);
     C->SetBranchAddress("sbs.hcal.e",&EHCAL);
     C->SetBranchAddress("sbs.hcal.atimeblk",&THCAL);
+
+    C->SetBranchStatus("bb.grinch_tdc.nclus",1);
+    C->SetBranchStatus("bb.grinch_tdc.clus.*",1);
     
     TVector3 BB_zaxis( sin(bbtheta), 0, cos(bbtheta) );
     TVector3 BB_xaxis( 0, -1, 0 );
