@@ -944,3 +944,5 @@ sbs.gemFT.chan_cm_flags = 640 # defines the "dummy" reference channel for storin
 sbs.gemFT.commonmode_nstriplo = 10 # for sorting method
 sbs.gemFT.commonmode_nstriphi = 50 # for sorting method... for an occupancy ~40%
 #sbs.gemFT.tryfasttrack = 0
+
+sbs.gemFT.do_goodADC_tracking = 1

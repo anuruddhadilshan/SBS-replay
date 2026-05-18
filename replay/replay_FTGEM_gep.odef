@@ -29,6 +29,8 @@ block sbs.gemFT.m*.roi.*
 block sbs.gemFT.m*.strip.*
 block sbs.gemFT.m*.goodADCclust.*
 block sbs.gemFT.m*.goodADChit.*
+block sbs.gemFT.goodADCtrack.*
+block sbs.gemFT.goodADCtrackhit.*
 
 
 #Cuts: 
