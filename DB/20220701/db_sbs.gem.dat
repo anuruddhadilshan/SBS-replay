@@ -130,7 +130,7 @@ sbs.gem.ADCasym_cut = 0.8
 sbs.gem.deltat_cut = 25.0
 sbs.gem.corrcoeff_cut = 0.5
 sbs.gem.filterflag1D = -1 # -1 = no filtering: don't require 1D hits to pass any cuts other than basic zero suppression
-sbs.gem.filterflag2D = 0  # 1 = "hard" filtering: require 2D hits to pass all cuts
+sbs.gem.filterflag2D = 0  # 0 = soft filtering, 1 = "hard" filtering: require 2D hits to pass all cuts
 
 sbs.gem.peakprominence_minsigma = 3.0 
 sbs.gem.peakprominence_minfraction = 0.15
@@ -193,8 +193,8 @@ sbs.gem.trackchi2cut = 30 #200 #50.0
 
 # For initial alignment with cosmics, we want to start with no constraints on track-finding:
 sbs.gem.useconstraint = 1 #1
-sbs.gem.useslopeconstraint = 0
-sbs.gem.useopticsconstraint = 0
+sbs.gem.useslopeconstraint = 1
+sbs.gem.useopticsconstraint = 1
 
 sbs.gem.sigmahitpos = 0.0001
 sbs.gem.do_efficiencies = 1
@@ -204,23 +204,41 @@ sbs.gem.efficiency_bin_width_1D = 0.02
 sbs.gem.efficiency_bin_width_2D = 0.04
 
 # these should probably be tighter later on:
-sbs.gem.xptar_min = -0.24
-sbs.gem.xptar_max = 0.24
+sbs.gem.xptar_min = -0.25
+sbs.gem.xptar_max = 0.25
 
-sbs.gem.yptar_min = -0.12
-sbs.gem.yptar_max = 0.12
+sbs.gem.yptar_min = -0.1
+sbs.gem.yptar_max = 0.1
 
-sbs.gem.ytar_min = -0.25
-sbs.gem.ytar_max = 0.25
+sbs.gem.ytar_min = -0.35
+sbs.gem.ytar_max = 0.35
 
 sbs.gem.pmin = 0.8
-sbs.gem.pmax = 11.0
+sbs.gem.pmax = 3.5
 
 sbs.gem.xpfp_min = -0.35
-sbs.gem.xpfp_max = 0.2
-sbs.gem.ypfp_min = -0.12
-sbs.gem.ypfp_max = 0.12
+sbs.gem.xpfp_max = 0.35
+sbs.gem.ypfp_min = -0.1
+sbs.gem.ypfp_max = 0.1
 
+sbs.gem.constraintwidth_theta = 0.05
+sbs.gem.constraintwidth_phi = 0.03
+
+----------[ 2022-11-07 00:00:00 ] # Kin. 3 constraints:
+
+sbs.gem.pmin = 0.8
+sbs.gem.pmax = 10.0
+
+sbs.gem.constraintwidth_theta = 0.045
+sbs.gem.constraintwidth_phi = 0.032
+
+---------[ 2023-01-01 00:00:00 ] # Start Kin. 4:
+
+sbs.gem.constraintwidth_theta = 0.045
+sbs.gem.constraintwidth_phi = 0.03
+
+
+---------[ 2022-07-01 00:00:00 ] # back to beginning:
 # # basic flags controlling decoding:
 sbs.gem.pedestalmode = 0
 sbs.gem.commonmode_flag = 0 # 1 = Danning, 0 = enhanced sorting, 2 = histogramming
@@ -676,13 +694,6 @@ sbs.gem.vpitch = 0.0004
 ## ORDER of entries in the maps is:                                                                   ##
 ## crate   slot   fiber/mpd  gemid  adc_ch   i2c   pos     invert   axis                              ##
 ########################################################################################################
-
-
-
-############ END TIME-DEPENDENT DECODE MAP ENTRIES
-
-
-
  
 
 # # Module average gains relative to target ADC peak position of 4000
@@ -749,8 +760,6 @@ sbs.gem.m26.vgain = 1  1  1  1  1  1  1  1  1  1
 sbs.gem.m27.vgain = 1  1  1  1  1  1  1  1  1  1 
 sbs.gem.m28.vgain = 1  1  1  1  1  1  1  1  1  1 
 sbs.gem.m29.vgain = 1  1  1  1  1  1  1  1  1  1 
-
-# ######################### END TIME-DEPENDENT GAIN-MATCH PARAMETERS $$$$$$$$$$$$$$$$$$$$$$$$
 
 
 #Sun Mar 27 17:41:50 2022
@@ -3088,3 +3097,4 @@ sbs.gem.m22.chanmap =
       24      11      33      23       2       2       2       0       0 
       24      11      33      23       3       1       3       0       0 
       24      11      33      23       4       0       4       0       0 
+
