@@ -1,10 +1,10 @@
 ## output variable definition for analysis of all detectors replay_gmn.C
 
 #include "replay_beam.odef"
-#include "replay_BBGEM.odef"
+#include "replay_BBGEM_light.odef"
 #include "replay_BBCal.odef"
 #include "replay_grinch.odef"
-#include "replay_hcal.odef"
+#include "replay_hcal_GEn.odef"
 #include "replay_hodo.odef"
 #include "replay_bb.odef"
 #include "replay_helicity.odef"

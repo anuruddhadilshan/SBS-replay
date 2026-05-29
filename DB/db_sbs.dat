@@ -1,5 +1,9 @@
 -------[ 2021-01-01 00:00:00 ]
 
+# during GEN, the SBS optics origin doesn't match the default, which corresponds to GEP GEM placement,
+# so we need to specify here!
+
+sbs.optics_origin = 0.0 0.0 4.8265
 
 ## track constraint widths:
 sbs.frontconstraintwidth_x = 0.75 # m
@@ -79,6 +83,7 @@ sbs.optics_parameters =
 
 --------[ 2022-10-14 00:00:00 ] # start GEN-2 kinematics: here we mainly run with SBS at full field:
 
+
 sbs.gemorigin_xyz =  -0.00102233   0.00070928      4.65
 sbs.gemangles_xyz =     -0.00627814    0.0419374    -0.0825597
 
@@ -106,15 +111,30 @@ sbs.optics_parameters =
  -3.3139766e-16 -5.5967834e-17 -3.8427815e-16 -9.6972098e-15  0 0 0 1 1
  -2.4792623e-16  2.7226815e-16 -1.3185506e-15 -8.6599971e-16  0 0 0 0 2
 
-sbs.frontconstraint_x0 = 0.197968
-sbs.frontconstraint_y0 = 0.031522
-sbs.backconstraint_x0 = -0.0634159
-sbs.backconstraint_y0 = -0.000809465
+#sbs.frontconstraint_x0 = 0.197968
+#sbs.frontconstraint_y0 = 0.031522
+#sbs.backconstraint_x0 = -0.0634159
+#sbs.backconstraint_y0 = -0.000809465
 
-sbs.frontconstraintwidth_x = 1.0
-sbs.frontconstraintwidth_y = 0.6
-sbs.backconstraintwidth_x = 0.31547
-sbs.backconstraintwidth_y = 0.29033
+# AJRP 5/20/2026: updating Kin. 2 back constraint offsets based on Jacob K's latest test replays, accounting for
+# new HCAL z offset:
+
+sbs.usedynamicconstraint = 1
+sbs.dynamicthslope = 0.0588
+sbs.dynamicth0 = -0.055
+sbs.dynamicphslope = 0.0588
+sbs.dynamicph0 = 0.002824
+
+sbs.backconstraint_x0 = -0.0429
+sbs.backconstraint_y0 = -0.00874
+
+sbs.frontconstraint_x0 = 0.05
+sbs.frontconstraint_y0 = -0.0076
+
+sbs.frontconstraintwidth_x = 0.35
+sbs.frontconstraintwidth_y = 0.25
+sbs.backconstraintwidth_x = 0.2565
+sbs.backconstraintwidth_y = 0.2295
 
 --------[ 2022-11-07 00:00:00 ] #optics for GEN3
 
@@ -144,15 +164,28 @@ sbs.optics_parameters =
  -3.3139766e-16 -5.5967834e-17 -3.8427815e-16 -9.6972098e-15  0 0 0 1 1
  -2.4792623e-16  2.7226815e-16 -1.3185506e-15 -8.6599971e-16  0 0 0 0 2
 
-sbs.frontconstraint_x0 = 0.0877402
-sbs.frontconstraint_y0 = 0.0449271
-sbs.backconstraint_x0 = -0.0465962
-sbs.backconstraint_y0 = 0.0998812
+# AJRP 5/20/2026: Updating SBS constraint parameters based on Jacob K's latest test replays:
+# Note that these assume that the x and y coordinates of sbs.hcal.position will be added to
+# the back constraint points! 
 
-sbs.frontconstraintwidth_x = 1.0
-sbs.frontconstraintwidth_y = 0.6
-sbs.backconstraintwidth_x = 0.432134
-sbs.backconstraintwidth_y = 0.470129
+sbs.usedynamicconstraint = 1
+sbs.dynamicthslope = 0.0588
+sbs.dynamicth0 = -0.0417
+sbs.dynamicphslope = 0.0588
+sbs.dynamicph0 = 0.001335
+
+#sbs.frontconstraint_x0 = 0.0877402
+#sbs.frontconstraint_y0 = 0.0449271
+sbs.backconstraint_x0 = -0.0452
+sbs.backconstraint_y0 = -0.0157
+
+sbs.frontconstraint_x0 = 0.0
+sbs.frontconstraint_y0 = -0.0164
+
+sbs.frontconstraintwidth_x = 0.3
+sbs.frontconstraintwidth_y = 0.2
+sbs.backconstraintwidth_x = 0.25
+sbs.backconstraintwidth_y = 0.23
 
 -------[ 2023-01-12 00:00:00 ]  #optics parameters for GEN4a kinematic
 
@@ -182,20 +215,29 @@ sbs.optics_parameters =
  -3.3139766e-16 -5.5967834e-17 -3.8427815e-16 -9.6972098e-15  0 0 0 1 1
  -2.4792623e-16  2.7226815e-16 -1.3185506e-15 -8.6599971e-16  0 0 0 0 2
 
-sbs.frontconstraint_x0 = 0.0728249
-sbs.frontconstraint_y0 = 0.0436534
-sbs.backconstraint_x0 = -0.0466736
-sbs.backconstraint_y0 = 0.0837408
+sbs.usedynamicconstraint = 1
+sbs.dynamicthslope = 0.0588
+sbs.dynamicth0 = -0.0366
+sbs.dynamicphslope = 0.0588
+sbs.dynamicph0 = 0.0
 
-sbs.frontconstraintwidth_x = 1.0
-sbs.frontconstraintwidth_y = 0.3
-sbs.backconstraintwidth_x = 0.448494
-sbs.backconstraintwidth_y = 0.489273
+#sbs.frontconstraint_x0 = 0.0728249
+#sbs.frontconstraint_y0 = 0.0436534 
+sbs.backconstraint_x0 = -0.05897
+sbs.backconstraint_y0 = -0.02916
 
--------[ 2023-03-08 00:00:00 ] #New Constraints for GEN4 kinematic
+sbs.frontconstraint_x0 = 0.0
+sbs.frontconstraint_y0 = -0.01723
 
-sbs.frontconstraintwidth_x = 1.0 # m
-sbs.frontconstraintwidth_y = 0.6 # m
+sbs.frontconstraintwidth_x = 0.4
+sbs.frontconstraintwidth_y = 0.15 # should accommodate vertex z values within +/-0.5 m (if anything, a bit overly conservative!)
+sbs.backconstraintwidth_x = 0.26
+sbs.backconstraintwidth_y = 0.21
+
+###-------[ 2023-03-08 00:00:00 ] #New Constraints for GEN4 kinematic
+
+#sbs.frontconstraintwidth_x = 1.0 # m
+#sbs.frontconstraintwidth_y = 0.6 # m
 
 ------[ 2023-09-01 00:00:00 ] # reverting to old constraint centering: 
 
@@ -237,15 +279,27 @@ sbs.optics_parameters =
  -3.3139766e-16 -5.5967834e-17 -3.8427815e-16 -9.6972098e-15  0 0 0 1 1
  -2.4792623e-16  2.7226815e-16 -1.3185506e-15 -8.6599971e-16  0 0 0 0 2
 
-sbs.frontconstraint_x0 = 0.108059
-sbs.frontconstraint_y0 = 0.0517615
-sbs.backconstraint_x0 = -0.0486764
-sbs.backconstraint_y0 = -0.000428677
+# for 4b, let's start with the same constraint settings as 4a, will fine-tune
+# with actual 4b data:
+sbs.usedynamicconstraint = 1
+sbs.dynamicthslope = 0.0588
+sbs.dynamicth0 = -0.0366
+sbs.dynamicphslope = 0.0588
+sbs.dynamicph0 = 0.0
 
-sbs.frontconstraintwidth_x = 1.0
-sbs.frontconstraintwidth_y = 0.6
-sbs.backconstraintwidth_x = 0.423403
-sbs.backconstraintwidth_y = 0.394051
+#sbs.frontconstraint_x0 = 0.0728249
+#sbs.frontconstraint_y0 = 0.0436534 
+sbs.backconstraint_x0 = -0.05897
+sbs.backconstraint_y0 = -0.02916
+
+sbs.frontconstraint_x0 = 0.0
+sbs.frontconstraint_y0 = -0.01723
+
+sbs.frontconstraintwidth_x = 0.4
+sbs.frontconstraintwidth_y = 0.15 # should accommodate vertex z values within +/-0.5 m (if anything, a bit overly conservative!)
+sbs.backconstraintwidth_x = 0.26
+sbs.backconstraintwidth_y = 0.21
+
 
 -------[ 2023-11-01 00:00:00 ] # start pion-A_LL
 

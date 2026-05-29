@@ -107,9 +107,11 @@ sbs.hcal.chanmap =
 ##   Ch1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16
        145 151 146 152 147 153 148 154 149 155 150 156 181 187 182 188 49  55  50  56  51  57  52  58  53  59  54  60  65  71  66  72   -1000  -1000  -1000  -1000  #TDC 5. Ribbons 9, 10.       
 
-## Positions in [m] where +z is roated by sbs.theta
-# note 12.175 m is the estimated distance from the first SBS GEM layer to the surface of HCAL in GEN-1 kinematics:
-sbs.hcal.position = 0 0 12.175
+## Positions in [m] where +z is roated by sbs.theta.
+# the "position" variables below are only relevant if there are tracking detectors in SBS, the positions are given relative to the origin of the GEM coordinate system.
+# the first SBS experiment with GEMs is GEN.
+# note 12.35 m is the estimated distance from the first SBS GEM layer to the surface of HCAL during GEN, but see kinematics-dependent adjustments below!
+sbs.hcal.position = 0 0 12.35
 
 ## HCal is composed of 4 sub-assemblies each of 6x12 (row,col) modules
 ## Test settings for one sub-assembly
@@ -1387,6 +1389,10 @@ sbs.hcal.tdc.offset =
 ########################################################
 
 -------[ 2022-10-14 20:00:00 ] # Beginning of GEN2 -> set 1: 2033 - 2085
+
+# AJRP 5/20/2026: effective HCAL z position of 12.0134 m downstream of GEM origin obtained by minimizing slope of hcal x - track x projection to hcal: 
+sbs.hcal.position = 0.0 0.0 12.0134
+
 sbs.hcal.adc.timeoffset = 
    -87.14185     -87.0692    -88.20583    -88.36037    -72.57274    -75.54806    -76.60343    -73.59427    -85.86451     -87.3117    -90.77649    -87.93846 
    -87.91638    -88.18342    -67.87773    -70.08823    -74.47529    -75.91999    -74.36021    -72.76298    -69.30489    -68.47907    -85.85248    -91.55437 
@@ -1693,6 +1699,13 @@ sbs.hcal.adc.timeoffset =
 ########################################################
 ########################################################
 -------[ 2022-11-10 00:00:00 ] # Beginning of GEN3 -> set1: 2506 - 2587
+
+# AJRP: HCAL effective Z position optimized based on slope of xtrack - xHCAL vs xHCAL
+# global Y position offset based on HCAL being at 21.6 degrees for Kin. 3, which differs from
+# SBS central angle of 22.1 degrees:
+
+sbs.hcal.position = 0.0 0.1484 12.038
+
 sbs.hcal.adc.timeoffset = 
      -80.791    -80.95494    -81.50609    -82.17719    -66.75068    -69.91675    -70.90219    -67.99216    -81.03619    -81.79145     -85.6749    -80.12133 
    -82.48458    -82.69769    -62.48709     -64.2611    -68.42902    -70.34867    -69.04848    -68.22757    -64.31517    -63.44223    -80.15935    -79.55101 
@@ -1969,6 +1982,13 @@ sbs.hcal.adc.timeoffset =
 
 ########################################################
 ########################################################
+
+-------[ 2023-01-01 00:00:00 ] # no need to wait until Jan. 12 to update sbs.hcal.position:
+
+# it seems as if HCAL also had a +0.5 degree offset in its positioning relative to the 18-degree 
+# angle of SBS
+sbs.hcal.position = 0 0.1484 12.1145
+
 -------[ 2023-01-12 00:00:00 ] # Beginning of GEN4 -> set1: 3510 - 3998
 sbs.hcal.adc.timeoffset = 
    -79.88438    -80.06583    -81.07694    -81.71189    -65.81232    -68.83069    -69.78809    -66.77904    -79.48347    -80.72096    -84.17708    -79.25368 
