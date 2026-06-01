@@ -2446,7 +2446,7 @@ sbs.hcal.reftdc.calib = 0.11186
 
 
 # After eTOF calibrations March 2026 Bhasitha
-#sbs.hcal.adc.timeoffset = 0.0
+
 sbs.hcal.adc.timeoffset = 
    -77.90708    -77.90708    -75.59543    -76.20058    -78.59919    -80.02587    -76.78787    -77.72289    -77.48759    -78.47786    -78.19557    -78.11869 
    -75.60125    -75.95474    -75.87644    -78.15734    -79.08244    -80.47224    -76.45366    -75.65638      -77.664    -76.77179    -78.12508    -77.33429 
@@ -2585,6 +2585,8 @@ sbs.hcal.adc.timeoffset =
 
  
 --------[ 2024-10-01 00:00:00 ] # start GEP: 
+
+sbs.hcal.adc.timeoffset = 0.0
 
 # let's go ahead and put in some sensible offline clustering thresholds:
 # lowering these offline thresholds as they seem to be cutting out too many good hits.
