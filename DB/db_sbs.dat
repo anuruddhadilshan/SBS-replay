@@ -698,8 +698,8 @@ sbs.optics_parameters =
 # these constraints should be okay to start with for "straight through" tracking with all SBS GEMs treated
 # together as a single tracking unit
 
-sbs.backconstraintwidth_x = 0.3
-sbs.backconstraintwidth_y = 0.26
+sbs.backconstraintwidth_x = 0.2
+sbs.backconstraintwidth_y = 0.18
 sbs.backconstraint_x0 = 0.0
 sbs.backconstraint_y0 = 0.0
 
@@ -716,10 +716,10 @@ sbs.usedynamicconstraint = 1
 
 sbs.polarimetermode = 0
 
-sbs.frontconstraintwidth_x = 0.45
-sbs.frontconstraintwidth_y = 0.15
-sbs.frontconstraint_x0 = 0.2
-sbs.frontconstraint_y0 = -0.012
+sbs.frontconstraintwidth_x = 0.2
+sbs.frontconstraintwidth_y = 0.1
+sbs.frontconstraint_x0 = -0.035
+sbs.frontconstraint_y0 = -0.004
 
 ------------[ 2024-04-18 23:51:00 ] # zero-field running, single foil. Target is front constraint:
 sbs.dynamicth0 = 0.0
@@ -739,10 +739,10 @@ sbs.backconstraintwidth_y = 0.18
 ------------[ 2024-04-19 3:30:00 ] # back to full-field running
 sbs.dynamicth0 = -0.051
 
-sbs.frontconstraintwidth_x = 0.45
-sbs.frontconstraintwidth_y = 0.15
-sbs.frontconstraint_x0 = 0.2 
-sbs.frontconstraint_y0 = 0.0
+sbs.frontconstraintwidth_x = 0.2
+sbs.frontconstraintwidth_y = 0.1
+sbs.frontconstraint_x0 = -0.035
+sbs.frontconstraint_y0 = -0.004
 
 
 ------------[ 2024-04-19 07:30:00 ] # analyzer installed
