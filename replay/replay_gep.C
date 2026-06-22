@@ -46,6 +46,7 @@ void replay_gep(UInt_t runnum, Long_t nevents=-1, Long_t firstevent=1, const cha
     SBSECal* ecal =  new SBSECal("ecal", "ECal");
     ecal->SetDataOutputLevel(2);
     ecal->SetStoreRawHits(kTRUE); // Enabling writing out waveform information.
+    ecal->SetEnableMultiPulse(kTRUE); //Enabling finding all pulses above thres
     earm->AddDetector( ecal );
     // // ECal VTP
     SBSVTP* ecalvtp = new SBSVTP("ecal.vtp", "ECal VTP");
@@ -63,8 +64,9 @@ void replay_gep(UInt_t runnum, Long_t nevents=-1, Long_t firstevent=1, const cha
     // // HCal
     SBSHCal* hcal = new SBSHCal("hcal", "HCAL");
     //Commenting these for production replays
-    hcal->SetStoreRawHits(kFALSE);
+    hcal->SetStoreRawHits(kTRUE);
     hcal->SetStoreEmptyElements(kFALSE);
+    hcal->SetEnableMultiPulse(kTRUE); //Enabling finding all pulses above thres
     harm->AddDetector( hcal );
     // VTP
     SBSVTP* hcalvtp = new SBSVTP("hcal.vtp", "HCal VTP");
