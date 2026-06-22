@@ -64,7 +64,7 @@ void replay_gep(UInt_t runnum, Long_t nevents=-1, Long_t firstevent=1, const cha
     // // HCal
     SBSHCal* hcal = new SBSHCal("hcal", "HCAL");
     //Commenting these for production replays
-    hcal->SetStoreRawHits(kTRUE);
+    hcal->SetStoreRawHits(kFALSE);
     hcal->SetStoreEmptyElements(kFALSE);
     hcal->SetEnableMultiPulse(kTRUE); //Enabling finding all pulses above thres
     harm->AddDetector( hcal );
