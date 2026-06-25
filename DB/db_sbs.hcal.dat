@@ -3044,8 +3044,8 @@ sbs.hcal.adc.gain =
 
 sbs.hcal.reftdc.GoodTimeCut = 0.0 0.0 0.0 0.0 110.0 110.0 110.0 110.0
 
-#sbs.hcal.adctime_min_clusterselect = 80.0
-#sbs.hcal.adctime_max_clusterselect = 110.0
+#sbs.hcal.adctime_min_clusterselect = -30.0
+#sbs.hcal.adctime_max_clusterselect = 30.0
 
 # implement "effective z" for HCAL applicable to Kin. 3
 # NOTE: these offsets will need to be updated after re-optimizing the GEM global alignment:
