@@ -183,6 +183,8 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   int hcal_selectionflag = 0; //0 = choose highest-energy passing ADC coincidence time cut
                               //1 = choose smallest thetapq (proton or neutron)
                               //2 = choose highest-energy regardless of ADC time.
+
+  int HCALatimeflag = 0; //default = use sbs.hcal.clus.atimeblk (current). 1 = OLD = use sbs.hcal.clus.atime
   
   while( currentline.ReadLine( configfile ) && !currentline.BeginsWith("endconfig") ){
     if( !currentline.BeginsWith("#") ){
@@ -206,6 +208,11 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
 	//   TString stemp = ( (TObjString*) (*tokens)[1] )->GetString();
 	//   order_ptheta = stemp.Atoi();
 	// }
+
+	if( skey == "HCALatimeflag" ){
+	  TString stemp = ( (TObjString*) (*tokens)[1] )->GetString();
+	  HCALatimeflag = stemp.Atoi();
+	}
 	
 	if( skey == "dEdx" ){ //assumed to be given in GeV/(g/cm^2)
 	  TString stemp = ( (TObjString*) (*tokens)[1] )->GetString();
@@ -458,6 +465,7 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
 
   int MAXHCALCLUSTERS=100;
   //Declare variables to hold branch addresses:
+  int MAXNBLKBBCAL = 50;
   
   double ntrack;
   double px[MAXNTRACKS], py[MAXNTRACKS], pz[MAXNTRACKS], p[MAXNTRACKS];
@@ -536,6 +544,7 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   C->SetBranchStatus("sbs.hcal.e",1);
   C->SetBranchStatus("sbs.hcal.atimeblk",1);
   C->SetBranchStatus("sbs.hcal.tdctimeblk",1);
+  C->SetBranchStatus("sbs.hcal.index",1);
 
   // block information for best cluster:
   C->SetBranchStatus("sbs.hcal.nblk",1);
@@ -550,6 +559,7 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   C->SetBranchStatus("sbs.hcal.clus_blk.col",1);
   C->SetBranchStatus("sbs.hcal.clus_blk.tdctime",1);
 
+  double indexHCAL;
   double nblkHCAL;
   double againHCAL[MAXHCALCLUSTERS];
   double atimeHCAL[MAXHCALCLUSTERS];
@@ -561,6 +571,7 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   double yblkHCAL[MAXHCALCLUSTERS];
   double tdctimeblkHCAL[MAXHCALCLUSTERS];
 
+  C->SetBranchAddress("sbs.hcal.index",&indexHCAL);
   C->SetBranchAddress("sbs.hcal.nblk",&nblkHCAL);
   C->SetBranchAddress("sbs.hcal.clus_blk.again",againHCAL);
   C->SetBranchAddress("sbs.hcal.clus_blk.atime",atimeHCAL);
@@ -571,7 +582,62 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   C->SetBranchAddress("sbs.hcal.clus_blk.x",xblkHCAL);
   C->SetBranchAddress("sbs.hcal.clus_blk.y",yblkHCAL);
   C->SetBranchAddress("sbs.hcal.clus_blk.tdctime",tdctimeblkHCAL);
+
+  //Block information for BBCAL:
+
+  C->SetBranchStatus("bb.ps.index",1);
+  C->SetBranchStatus("bb.sh.index",1);
+  C->SetBranchStatus("bb.ps.nblk",1);
+  C->SetBranchStatus("bb.sh.nblk",1);
+  C->SetBranchStatus("bb.sh.clus_blk.*",1);
+  C->SetBranchStatus("bb.ps.clus_blk.*",1);
   
+  double indexBBSH;
+  double nblkBBSH;
+  double againBBSH[MAXNBLKBBCAL];
+  double atimeBBSH[MAXNBLKBBCAL];
+  double eblkBBSH[MAXNBLKBBCAL];
+  double idblkBBSH[MAXNBLKBBCAL];
+  double rowblkBBSH[MAXNBLKBBCAL];
+  double colblkBBSH[MAXNBLKBBCAL];
+  double xblkBBSH[MAXNBLKBBCAL];
+  double yblkBBSH[MAXNBLKBBCAL];
+  //double tdctimeblkBBSH[MAXNBLKBBCAL];
+
+  C->SetBranchAddress("bb.sh.index",&indexBBSH);
+  C->SetBranchAddress("bb.sh.nblk",&nblkBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.again",againBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.atime",atimeBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.e",eblkBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.id",idblkBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.row",rowblkBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.col",colblkBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.x",xblkBBSH);
+  C->SetBranchAddress("bb.sh.clus_blk.y",yblkBBSH);
+  
+  
+  double indexBBPS;
+  double nblkBBPS;
+  double againBBPS[MAXNBLKBBCAL];
+  double atimeBBPS[MAXNBLKBBCAL];
+  double eblkBBPS[MAXNBLKBBCAL];
+  double idblkBBPS[MAXNBLKBBCAL];
+  double rowblkBBPS[MAXNBLKBBCAL];
+  double colblkBBPS[MAXNBLKBBCAL];
+  double xblkBBPS[MAXNBLKBBCAL];
+  double yblkBBPS[MAXNBLKBBCAL];
+  //  double tdctimeblkBBPS[MAXNBLKBBCAL];
+
+  C->SetBranchAddress("bb.ps.index",&indexBBPS);
+  C->SetBranchAddress("bb.ps.nblk",&nblkBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.again",againBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.atime",atimeBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.e",eblkBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.id",idblkBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.row",rowblkBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.col",colblkBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.x",xblkBBPS);
+  C->SetBranchAddress("bb.ps.clus_blk.y",yblkBBPS);
   
   //minimal set of hodoscope branches:
   C->SetBranchStatus("Ndata.bb.hodotdc.clus.tmean",1);
@@ -694,7 +760,11 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   C->SetBranchAddress("sbs.hcal.clus.y",yHCAL);
   C->SetBranchAddress("sbs.hcal.clus.e",EHCAL);
   //  C->SetBranchAddress("sbs.hcal.clus.adctime",ADCTIMEHCAL);
-  C->SetBranchAddress("sbs.hcal.clus.atimeblk",ADCTIMEHCAL);
+  if( HCALatimeflag == 0 ){
+    C->SetBranchAddress("sbs.hcal.clus.atimeblk",ADCTIMEHCAL);
+  } else {
+    C->SetBranchAddress("sbs.hcal.clus.atime",ADCTIMEHCAL);
+  }
   C->SetBranchAddress("sbs.hcal.clus.tdctime",TDCTIMEHCAL);
   C->SetBranchAddress("sbs.hcal.clus.eblk",EMAXHCAL);
   C->SetBranchAddress("sbs.hcal.clus.nblk",NBLKHCAL);
@@ -930,6 +1000,9 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   Tout->Branch( "ibest_HCAL", &bestHCALcluster, "ibest_HCAL/I" );
 
   Tout->Branch( "THODO", &T_Thodo, "THODO/D" );
+
+  int T_HCALindex;
+  Tout->Branch("indexHCAL", &T_HCALindex, "indexHCAL/I");
   
   int T_HCALnblk;
   //Write out all the blocks in the best HCAL cluster:
@@ -944,6 +1017,29 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   Tout->Branch( "colblkHCAL", colblkHCAL, "colblkHCAL[nblkHCAL]/D" );
   Tout->Branch( "xblkHCAL", xblkHCAL, "xblkHCAL[nblkHCAL]/D" );
   Tout->Branch( "yblkHCAL", yblkHCAL, "yblkHCAL[nblkHCAL]/D" );
+
+  int T_BBPSnblk;
+  Tout->Branch("nblkBBPS", &T_BBPSnblk, "nblkBBPS/I" );
+  Tout->Branch("againblkBBPS", againBBPS, "againblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("atimeblkBBPS", atimeBBPS, "atimeblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("eblkBBPS", eblkBBPS, "eblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("idblkBBPS", idblkBBPS, "idblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("rowblkBBPS", rowblkBBPS, "rowblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("colblkBBPS", colblkBBPS, "colblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("xblkBBPS", xblkBBPS, "xblkBBPS[nblkBBPS]/D" );
+  Tout->Branch("yblkBBPS", yblkBBPS, "yblkBBPS[nblkBBPS]/D" );
+
+  int T_BBSHnblk;
+  Tout->Branch("nblkBBSH", &T_BBSHnblk, "nblkBBSH/I" );
+  Tout->Branch("againblkBBSH", againBBSH, "againblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("atimeblkBBSH", atimeBBSH, "atimeblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("eblkBBSH", eblkBBSH, "eblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("idblkBBSH", idblkBBSH, "idblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("rowblkBBSH", rowblkBBSH, "rowblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("colblkBBSH", colblkBBSH, "colblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("xblkBBSH", xblkBBSH, "xblkBBSH[nblkBBSH]/D" );
+  Tout->Branch("yblkBBSH", yblkBBSH, "yblkBBSH[nblkBBSH]/D" );
+
   
   Tout->Branch( "grinch_clsize", &T_grinch_clustersize, "grinch_clsize/I");
   Tout->Branch( "grinch_tridx", &T_grinch_tridx, "grinch_tridx/I");
@@ -951,6 +1047,8 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
   Tout->Branch( "grinch_xmean", &T_grinch_xmean, "grinch_xmean/D"); 
   Tout->Branch( "grinch_ymean", &T_grinch_ymean, "grinch_ymean/D");
   Tout->Branch( "grinch_adc", &T_grinch_adc, "grinch_adc/D");
+
+  
 
   
   Long64_t NTOT = C->GetEntriesFast();
@@ -1008,12 +1106,17 @@ void ElasticEventSelection_MultiCluster( const char *configfilename, const char 
 
     T_HCALnblk = int(nblkHCAL);
 
+    T_BBPSnblk = int(nblkBBPS);
+    T_BBSHnblk = int(nblkBBSH);
+    
     //T_runnum = int(runnumber);
     
     if( int(ntrack) >= 1 && passed_global_cut ){
       //The first thing we want to do is to calculate the "true" electron momentum incident on BigBite:
       double Ebeam_corrected = ebeam - MeanEloss;
 
+      T_HCALindex = int( indexHCAL ); //best cluster selected by "online" replay
+      
       T_xfcp = xfcp[0];
       T_yfcp = yfcp[0];
       T_zfcp = zfcp[0];

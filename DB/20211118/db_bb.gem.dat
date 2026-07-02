@@ -1724,7 +1724,9 @@ bb.gem.maxtrigtime_correction = 25.0
 ### flags controlling decoding/pedestal/common-mode calculations:
 
 bb.gem.pedestalmode = 0
-bb.gem.commonmode_flag = 2 # 0 = sorting, 1 = "Danning method", 2 = histogramming method cm subtraction
+bb.gem.commonmode_flag = 0 # 0 = sorting, 1 = "Danning method", 2 = histogramming method cm subtraction
+bb.gem.commonmode_online_flag = 3 # GMN Danning method
+
 bb.gem.commonmode_nstriplo = 20
 bb.gem.commonmode_nstriphi = 20
 bb.gem.commonmode_niter = 3
@@ -1782,7 +1784,7 @@ bb.gem.maxnv_pos = 2
 
 bb.gem.sigmahitshape = 0.0004
 bb.gem.zerosuppress = 1
-bb.gem.zerosuppress_nsigma = 5.0
+bb.gem.zerosuppress_nsigma = 3.0
 bb.gem.onlinezerosuppress = 1 # note that this parameter only provides a default value, actual behavior is determined by the flags seen in the raw data:
 
 bb.gem.plot_common_mode = 1

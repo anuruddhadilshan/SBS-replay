@@ -38,7 +38,6 @@ const Double_t zposPS = 1.695704; // m
 
 const double zhodo = 1.854454;                   // meters
 const double Lbar_hodo = 0.6;                    // meters
-const double etof0 = 15.996; //(1.96 + 3.0) / 0.299792458; // "central" TOF value: ns (1.96m + 3.0m) / speed of light in vacuum (m/ns)
 
 double RF_freq = 249.5e6;
 double bunch_spacing_ns = 1.0e9 / RF_freq;
@@ -80,7 +79,7 @@ void qualityA_plots_BBCAL(TString outFileBase = "qulaityA_plots_BBCAL.root",
       Double_t h2_p_coarse_bin = 25, h2_p_coarse_min = 0., h2_p_coarse_max = 5.;
       Double_t h2_SHeng_vs_blk_low = 0., h2_SHeng_vs_blk_up = 4.;
       Double_t h2_PSeng_vs_blk_low = 0., h2_PSeng_vs_blk_up = 4.;
-      Double_t bbcal_atppos = 0., hcal_atppos = 0., BBtrig_t0 = 0.;
+      Double_t bbcal_atppos = 0., hcal_atppos = 0., BBtrig_t0 = 0., etof0 = 0.;
       int apply_th_timeoffset = 0, apply_hcal_atimeoffset = 0, apply_sh_atimeoffset = 0, apply_ps_atimeoffset = 0;
       float const_hcal_atimeoffset = 0., const_sh_atimeoffset = 0., const_ps_atimeoffset = 0.;
       TString fname_HCAL_atime_offsets_old = "", fname_BBSH_atime_offsets_old = "", fname_BBPS_atime_offsets_old = "";
@@ -181,7 +180,12 @@ void qualityA_plots_BBCAL(TString outFileBase = "qulaityA_plots_BBCAL.root",
                         nspot_dyM = ((TObjString *)(*tokens)[4])->GetString().Atof();
                         nspot_dyS = ((TObjString *)(*tokens)[5])->GetString().Atof();
                         nspot_ndyS = ((TObjString *)(*tokens)[6])->GetString().Atof();
-                  }                  
+                  }
+                  if (skey.EqualTo("etof0"))
+                  {
+                        TString sval = ((TObjString *)(*tokens)[1])->GetString();
+                        etof0 = sval.Atof();
+                  }   		  
                   if (skey.EqualTo("BBtrig_t0"))
                   {
                         TString sval = ((TObjString *)(*tokens)[1])->GetString();

@@ -1,29 +1,29 @@
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_123*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_1241*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_1242*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_1243*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_1244*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_1245*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_1246*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_129*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LH2/rootfiles/e1209019_fullreplay_13*.root
+/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_123*.root
+/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_1241*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_1242*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_1243*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_1244*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_1245*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_1246*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_129*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LH2/rootfiles/e1209019_fullreplay_13*.root
 # #
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_123*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_1241*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_1242*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_1243*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_1244*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_1245*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_1246*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_129*.root
-/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/TEST/SBS11/LD2/rootfiles/e1209019_fullreplay_13*.root
+/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_123*.root
+/volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_1241*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_1242*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_1243*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_1244*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_1245*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_1246*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_129*.root
+# /volatile/halla/sbs/sbs-gmn/GMN_REPLAYS/pass3/QA_FINAL/SBS11/LD2/rootfiles/e1209019_fullreplay_13*.root
 endlist
-sbs.hcal.nclus>0&&bb.ps.e>0.2&&abs(bb.etot_over_p[0]-1.)<0.3&&abs(bb.tr.vz[0])<0.08&&abs(sbs.hcal.atimeblk-bb.hodotdc.clus.tfinal[0]-10.4)<10&&sbs.hcal.e>0.2&&bb.gem.track.ngoodhits[0]>2&&bb.gem.track.chi2ndf[0]<15
+sbs.hcal.nclus>0&&bb.ps.e>0.2&&abs(bb.etot_over_p[0]-1.)<0.3&&abs(bb.tr.vz[0])<0.08&&abs(sbs.hcal.atimeblk-bb.hodotdc.clus.tfinal[0]-0.4)<10&&sbs.hcal.e>0.2&&bb.gem.track.ngoodhits[0]>2&&bb.gem.track.chi2ndf[0]<15
 endcut
 BBtrig_t0 370.0
 Mineventsperbar 100
-etof0 15.996
-RFoffsets RFoffsets_old.txt
+etof0 15.1715333
+RFoffsets RFoffsets_old_set1.txt
 ebeam 9.889
 sbsmaxfield 1.26
 dSBS 2.25
@@ -35,12 +35,12 @@ W2min 0.4
 W2max 1.5
 W2min_LD2 0.2
 W2max_LD2 2.0
-vscint_old hodovscint_old.txt
-walkcorr_old hodowalkcorr_old.txt
+vscint_old hodovscint_old_set1.txt
+walkcorr_old hodowalkcorr_old_set1.txt
 useelasticcut_HCAL 0
-HCAL_ADCtime_offsets hcalt0ADC_old.txt
-BBSH_ADCtime_offsets BBSHt0ADC_old.txt
-BBPS_ADCtime_offsets BBPSt0ADC_old.txt
+HCAL_ADCtime_offsets hcalt0ADC_old_set1.txt
+BBSH_ADCtime_offsets BBSHt0ADC_old_set1.txt
+BBPS_ADCtime_offsets BBPSt0ADC_old_set1.txt
 fixhodoparams 0
 dx0 -0.0019331
 dy0 -0.0207163

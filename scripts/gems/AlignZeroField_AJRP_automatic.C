@@ -833,7 +833,7 @@ void AlignZeroField( const char *configfilename ){
   outfile << outline << endl;
   cout << outline << endl;
 
- outline.Form("GEMY0 = %18.9g +/- %18.9g",fitpar[1], fitparerr[1]);
+  outline.Form("GEMY0 = %18.9g +/- %18.9g",fitpar[1], fitparerr[1]);
   outfile << outline << endl;
   cout << outline << endl;
 
@@ -861,6 +861,20 @@ void AlignZeroField( const char *configfilename ){
   outfile << outline << endl;
   cout << outline << endl;
 
+  TString dbfilename = configfilename;
+  dbfilename.ReplaceAll(".txt",".dat");
+  dbfilename.Prepend("db_");
+
+  ofstream dbfile(dbfilename.Data());
+
+  dbfile << Form( "bb.gemorigin_xyz = %14.9g %14.9g %14.9g", fitpar[0], fitpar[1], fitpar[2] ) << endl;
+  dbfile << Form( "bb.gemangles_xyz = %14.9g %14.9g %14.9g",
+		  fitpar[4]*TMath::RadToDeg(),
+		  fitpar[5]*TMath::RadToDeg(),
+		  fitpar[6]*TMath::RadToDeg() ) << endl;
+
+  
+  
   fout->Write();
  
 }//end program

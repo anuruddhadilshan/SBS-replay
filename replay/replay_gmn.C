@@ -352,6 +352,8 @@ void replay_gmn(UInt_t runnum=10491, Long_t nevents=-1, Long_t firstevent=0, con
   
   //added cut list in order to have 
   TString cdef_filename = "replay_gmn_farm.cdef";
+
+  //cdef_filename = "replay_gmn.cdef";
   
   cdef_filename.Prepend( prefix );
   

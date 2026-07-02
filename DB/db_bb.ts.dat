@@ -44,6 +44,9 @@ bb.ts.pssh_matchmap_y =
 bb.ts.MaxDx = 0.15
 bb.ts.MaxDy = 0.20
 
+# experimental:
+bb.ts.bestclusterselectionflag = 1
+
 # max ADC time difference between shower and preshower to match clusters:
 # this was wrong: tmax cut definition has no effect for total shower, because SBSCalorimeter::ReadDatabase doesn't get called. Move to preshower.
 #bb.ts.tmax = 15.0 

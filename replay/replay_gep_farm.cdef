@@ -1,7 +1,7 @@
 # Add cuts here
 
 Block: CoarseReconstruct
-GoodCoinTime earm.ecal.nclus>0&&sbs.hcal.nclus>0&&abs(earm.ecal.atimeblk-sbs.hcal.atimeblk-10.0)<50.0
+GoodCoinTime earm.ecal.nclus>0&&sbs.hcal.nclus>0&&abs(earm.ecal.atimeblk-sbs.hcal.atimeblk)<20.0
 CoarseReconstruct_master GoodCoinTime
 
 Block: Physics

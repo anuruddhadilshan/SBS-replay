@@ -7,7 +7,7 @@
 #include "replay_hodo_mc.odef"
 #include "replay_bb.odef"
 
-#block MC.simc*
+block MC.simc*
 block MC.mc*
 variable MC.nbbtracks
 block MC.bbtrack*

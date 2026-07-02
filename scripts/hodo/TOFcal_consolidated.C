@@ -94,6 +94,8 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   const int MAXNBLK_HCAL = 50;
   const int MAXNBLK_BBSH = 25;
   const int MAXNBLK_BBPS = 10;
+
+  const int MAXNHIT_GRINCH = 100; //This might need to be adjusted higher for GEN analysis
   
   ifstream configfile(inputfilename);
 
@@ -127,6 +129,8 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
 
   int BBSHrefID = 95;
   int BBPSrefID = 22;
+
+  int GRINCHrefID = 275;
   
   double zhodo = 1.854454; //meters
   double Lbar_hodo = 0.6; //meters
@@ -151,7 +155,9 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   double tdiff_max = 10.0; //max time difference with respect to cluster maximum
   double ydiff_max = 0.25; // 0.15 m/ (0.18 m/ns) 
   double xdiff_max = 0.06; // vertical position difference of 0.06 m max wrt track projection 
-  
+
+  double GRINCH_TDC_calib = 1.0; //ns/TDC count
+  double GRINCH_tdiff_max = 15.0; //ns
   
   int mineventsperbar = 100;
   
@@ -182,7 +188,8 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   TString fname_HCAL_ADCtime_offsets="";
   TString fname_BBSH_ADCtime_offsets="";
   TString fname_BBPS_ADCtime_offsets="";
-
+  TString fname_GRINCH_offsets="";
+  
   bool fixhodoparams = false;
   
   bool useRFcorr = false;
@@ -206,6 +213,13 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   double dy04vect = 0.0;
   double dxsigma4vect = 0.1;
   double dysigma4vect = 0.1;
+
+  double dtcut_SH = 10.0;
+  double dtcut_PS = 10.0;
+  double dtcut_HCAL = 10.0; 
+
+  int minhits_GRINCH_internal = 100;
+  int minhits_GRINCH_hododiff = 300;
   
   while( currentline.ReadLine(configfile) && !currentline.BeginsWith("endconfig") ){
     if( !currentline.BeginsWith("#") ){
@@ -379,7 +393,37 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
 	if( skey.EqualTo("dy04vect") ){
 	  dy04vect = sval.Atof();
 	}
+
+	if( skey.EqualTo( "dtcut_SH" ) ){
+	  dtcut_SH = sval.Atof();
+	}
+
+	if( skey.EqualTo( "dtcut_PS" ) ){
+	  dtcut_PS = sval.Atof();
+	}
+
+	if( skey.EqualTo( "dtcut_HCAL" ) ){
+	  dtcut_HCAL = sval.Atof();
+	}
+
+	if( skey.EqualTo( "GRINCH_TDC_calib" ) ){
+	  GRINCH_TDC_calib = sval.Atof();
+	}
+
+	if( skey.EqualTo( "GRINCH_TDC_offsets" ) ){
+	  fname_GRINCH_offsets = sval;
+	}
 	
+	if( skey.EqualTo( "GRINCH_tdiff_max" ) ){
+	  GRINCH_tdiff_max = sval.Atof();
+	}
+
+	if( skey.EqualTo( "minhits_GRINCH_internal") ){
+	  minhits_GRINCH_internal = sval.Atoi();
+	}
+	if( skey.EqualTo( "minhits_GRINCH_hododiff") ){
+	  minhits_GRINCH_hododiff = sval.Atoi();
+	} 
       }
     }
   }
@@ -537,6 +581,27 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   int nchan_BBSH = 189;
   int nchan_BBPS = 52;
 
+  int nchan_GRINCH = 512;
+
+  vector<double> oldGRINCHoffsets( nchan_GRINCH, 0.0 );
+  ifstream oldGRINCHoffsetsfile(fname_GRINCH_offsets.Data());
+  if( oldGRINCHoffsetsfile ){
+    int npar=0; double par=0.0;
+    while( oldGRINCHoffsetsfile >> par ){
+      if( npar<nchan_GRINCH ){
+	//Since time = (TDC - offset)*calib, we want to multiply offset by calib
+	// time offset = offset*calib
+	// NOTE: we will have to DIVIDE by calib at the end when writing the NEW offsets
+	oldGRINCHoffsets[npar] = par * GRINCH_TDC_calib;
+      }
+      npar++;
+    }
+    if( npar != nchan_GRINCH ){
+      cout << "Error: old GRINCH offsets file contains incorrect number (" << npar << ", expected 512) of entries; abort" << endl;
+      exit(-1);
+    }
+  }
+  
   // For the moment, we only add the old offsets to the new ones after the analysis is over
   // for ADC times:
   vector<double> oldHCALoffsets( nchan_HCAL, 0.0 );
@@ -700,6 +765,7 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   C->SetBranchStatus("sbs.hcal.atimeblk",1);
   C->SetBranchStatus("sbs.hcal.nblk_goodtdc",1);
   C->SetBranchStatus("bb.tr.*",1);
+  C->SetBranchStatus("bb.grinch_tdc.*",1);
   C->SetBranchStatus("bb.gem.track.*",1);
   C->SetBranchStatus("e.kine.*",1);
   C->SetBranchStatus("bb.tdctrig.*",1);
@@ -1239,7 +1305,7 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   oldtreenum = -1;
 
   nevent = 0;
-  cout << "Loop 3: Fit hodoscope walk correction slope, propagation delay, and t0 offset, and set up internal alignment of BBCAL and HCAL FADC times" << endl;
+  cout << "Loop 3: Fit hodoscope walk correction slope, propagation delay, and t0 offset, and set up internal alignment of BBCAL and HCAL FADC times and GRINCH TDC time" << endl;
 
   int nchan_BBCAL = 189+52;
   
@@ -1252,6 +1318,17 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   TMatrixD Mint_BBCAL( nchan_BBCAL, nchan_BBCAL );
   TMatrixD Mint_HCAL( nchan_HCAL, nchan_HCAL );
 
+  vector<double> nhit_chan_GRINCH(nchan_GRINCH, 0.0 );
+  TVectorD bint_GRINCH( nchan_GRINCH );
+  TMatrixD Mint_GRINCH( nchan_GRINCH, nchan_GRINCH );
+
+  for( int i=0; i<nchan_GRINCH; i++ ){
+    for( int j=0; j<nchan_GRINCH; j++ ){
+      Mint_GRINCH(i,j) = 0.0;
+    }
+    bint_GRINCH(i) = 0.0;
+  }
+  
   for( int i=0; i<nchan_BBCAL; i++ ){
     for( int j=0; j<nchan_BBCAL; j++ ){
       Mint_BBCAL(i,j) = 0.0;
@@ -1553,15 +1630,51 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
       int nblkPS = std::min(MAXNBLK_BBPS,int(T->bb_ps_nblk));
       int nblkHCAL = std::min(MAXNBLK_HCAL,int(T->sbs_hcal_nblk));
 
+      int nhitGRINCH = std::min(MAXNHIT_GRINCH, int(T->bb_grinch_tdc_ngoodhits) );
+      
       // cout << "event " << nevent << ", (nblkSH, nblkPS, nblkHCAL)=("
       // 	   << nblkSH << ", " << nblkPS << ", " << nblkHCAL << ")" << endl;
+
+      if( T->bb_grinch_tdc_clus_size > 2 && T->bb_grinch_tdc_clus_trackindex==0 ){ //increment
+	// GRINCH internal alignment matrices:
       
+	for( int ihit=0; ihit<nhitGRINCH; ihit++ ){
+	  
+	  
+	  //We don't need the trigger phase correction for the INTERNAL alignment of GRINCH:
+	  double thit_i = T->bb_grinch_tdc_hit_time[ihit];
+
+	  int pmt_i = int(T->bb_grinch_tdc_hit_pmtnum[ihit]);
+	  
+	  bool goodhit_i =  T->bb_grinch_tdc_hit_trackindex[ihit] == 0 && T->bb_grinch_tdc_hit_clustindex[ihit] == T->bb_grinch_tdc_bestcluster && fabs( thit_i - T->bb_grinch_tdc_clus_t_mean ) <= GRINCH_tdiff_max;
+	  
+	  for( int jhit=ihit+1; jhit<nhitGRINCH; jhit++ ){
+	    double thit_j = T->bb_grinch_tdc_hit_time[jhit];
+	    bool goodhit_j = T->bb_grinch_tdc_hit_trackindex[jhit] == 0 && T->bb_grinch_tdc_hit_clustindex[jhit] == T->bb_grinch_tdc_bestcluster && fabs( thit_j - T->bb_grinch_tdc_clus_t_mean ) <= GRINCH_tdiff_max;
+
+	    int pmt_j = int(T->bb_grinch_tdc_hit_pmtnum[jhit]);
+	    
+	    if( goodhit_i && goodhit_j ){
+	      nhit_chan_GRINCH[pmt_i] += 1.0;
+	      nhit_chan_GRINCH[pmt_j] += 1.0;
+	      Mint_GRINCH( pmt_i, pmt_i ) += 1.0;
+	      Mint_GRINCH( pmt_i, pmt_j ) += -1.0;
+	      Mint_GRINCH( pmt_j, pmt_i ) += -1.0;
+	      Mint_GRINCH( pmt_j, pmt_j ) += 1.0;
+	      bint_GRINCH( pmt_i ) += thit_i - thit_j;
+	      bint_GRINCH( pmt_j ) += thit_j - thit_i;
+	    }
+	    
+	  }
+	}
+      }
+	
       for( int ihit=0; ihit<nblkSH; ihit++ ){
 	double ehit = T->bb_sh_clus_blk_e[ihit];
 	double atimehit = T->bb_sh_clus_blk_atime[ihit];
 	//Only use hits above threshold in both GeV and fraction of seed energy:
 	if( ehit >= 0.1 && ehit/T->bb_sh_eblk >= 0.05 &&
-	    fabs( atimehit - T->bb_sh_atimeblk ) <= 10.0 ){
+	    fabs( atimehit - T->bb_sh_atimeblk ) <= dtcut_SH ){
 	  bbcal_idtemp.push_back( int( T->bb_sh_clus_blk_id[ihit] ) );
 	  bbcal_etemp.push_back( T->bb_sh_clus_blk_e[ihit] );
 	  bbcal_atimetemp.push_back( T->bb_sh_clus_blk_atime[ihit] );
@@ -1571,7 +1684,7 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
 	double ehit = T->bb_ps_clus_blk_e[ihit];
 	double atimehit = T->bb_ps_clus_blk_atime[ihit];
 	if( ehit >= 0.05 && ehit/T->bb_ps_eblk >= 0.1 &&
-	    fabs( atimehit - T->bb_ps_atimeblk ) <= 10.0 ){
+	    fabs( atimehit - T->bb_ps_atimeblk ) <= dtcut_PS ){
 	  bbcal_idtemp.push_back( int(T->bb_ps_clus_blk_id[ihit]) + 189 );
 	  bbcal_etemp.push_back( T->bb_ps_clus_blk_e[ihit] );
 	  bbcal_atimetemp.push_back( T->bb_ps_clus_blk_atime[ihit] );
@@ -1604,9 +1717,9 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
 	  double t_j = T->sbs_hcal_clus_blk_atime[jhit];
 
 	  if( e_i >= 0.025 && e_i > 0.1 * T->sbs_hcal_eblk && T->sbs_hcal_e >= 0.05 &&
-	      fabs( t_i - T->sbs_hcal_atimeblk ) <= 10.0 &&
+	      fabs( t_i - T->sbs_hcal_atimeblk ) <= dtcut_HCAL &&
 	      e_j >= 0.025 && e_j > 0.1 * T->sbs_hcal_eblk && T->sbs_hcal_e >= 0.05 &&
-	      fabs( t_j - T->sbs_hcal_atimeblk ) <= 10.0 ){
+	      fabs( t_j - T->sbs_hcal_atimeblk ) <= dtcut_HCAL ){
 	    nhit_chan_HCAL[id_i] += 1.0;
 	    nhit_chan_HCAL[id_j] += 1.0;
 	    
@@ -1726,6 +1839,32 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   for( int i=0; i<nchan_HCAL; i++ ){
     HCAL_t0ADC[i] = bint_HCAL(i);
   }
+
+  for( int i=0; i<nchan_GRINCH; i++ ){
+    if( nhit_chan_GRINCH[i] < minhits_GRINCH_internal ){
+      bint_GRINCH(i) = 0.0;
+      Mint_GRINCH(i,i) = 1.0;
+      for( int j=0; j<nchan_GRINCH; j++ ){
+	if( j != i ){
+	  Mint_GRINCH(j,i) = 0.0;
+	  Mint_GRINCH(i,j) = 0.0;
+	}
+      }
+    }
+  }
+
+  TDecompSVD AGRINCH(Mint_GRINCH);
+  AGRINCH.Solve( bint_GRINCH );
+
+  corr = -bint_GRINCH( GRINCHrefID );
+  for( int i=0; i<nchan_GRINCH; i++ ){
+    bint_GRINCH(i) += corr;
+  }
+  
+  vector<double> GRINCH_t0(nchan_GRINCH,0.0);
+  for(int i=0; i<nchan_GRINCH; i++ ){
+    GRINCH_t0[i] = bint_GRINCH(i);
+  }
   
   nevent = 0;
 
@@ -1785,6 +1924,9 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   TH2D *hdt_HCAL_hodo_vs_IDHCAL = new TH2D("hdt_HCAL_hodo_vs_IDHCAL","; HCAL block ID ; t_{HCAL}^{(FADC)}-t_{HODO} (ns)", 288,0.5,288.5,500,-50,50);
   TH2D *hdt_BBSH_hodo_vs_IDBBSH = new TH2D("hdt_BBSH_hodo_vs_IDBBSH","; BBSH block ID ; t_{BBSH}^{(FADC)}-t_{HODO} (ns)", 189,-0.5,188.5,500,-50,50);
   TH2D *hdt_BBPS_hodo_vs_IDBBPS = new TH2D("hdt_BBPS_hodo_vs_IDBBPS","; BBPS block ID ; T_{BBPS}^{(FADC)}-t_{HODO} (ns)", 52,-0.5,51.5,500,-50,50); 
+
+  //Add GRINCH:
+  TH2D *hdt_GRINCH_hodo_vs_IDGRINCH = new TH2D("hdt_GRINCH_hodo_vs_IDGRINCH", "; GRINCH PMT; t_{GRINCH}-t_{HODO} (ns)", 512, -0.5, 511.5, 200, -50, 50 );
   
   int bar3counter=0;
   
@@ -2005,6 +2147,31 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
 	  }
 	}
 
+	int nhitGRINCH = std::min(MAXNHIT_GRINCH, int( T->bb_grinch_tdc_ngoodhits ) );
+	//Add GRINCH: 
+	for( int ihit=0; ihit<nhitGRINCH; ihit++ ){ //For this comparison we DO require trigger phase correction:
+	  //We'll manually correct GRINCH times for trigger phase until we have some
+	  //large replays with the new "corrected time" variables:
+
+	  long timestamp = long(T->g_evtime);
+	  
+	  double trigphasecorr = 4.00802 * ((timestamp%2+1)%2-1);
+
+	  // cout << "timestamp, trigphase, trigphasecorr = " << timestamp
+	  //      << ", " << (timestamp%2+1)%2-1 << ", " << trigphasecorr << endl;
+	  
+	  double time = T->bb_grinch_tdc_hit_time[ihit];
+	  int pmt = int( T->bb_grinch_tdc_hit_pmtnum[ihit] );
+	  
+	  bool goodhit = T->bb_grinch_tdc_hit_trackindex[ihit] == 0 && T->bb_grinch_tdc_hit_clustindex[ihit] == T->bb_grinch_tdc_bestcluster && fabs( time - T->bb_grinch_tdc_clus_t_mean ) <= GRINCH_tdiff_max;
+
+	  //time -= GRINCH_t0[pmt]; //correct GRINCH time for internal alignment offset
+
+	  if( goodhit ){
+	    hdt_GRINCH_hodo_vs_IDGRINCH->Fill( pmt, time - GRINCH_t0[pmt] - trigphasecorr - HodoTmean );
+	  }
+	}
+	  
 	//For HCAL ADC times, we'll fill histogram with a cut on deltax, deltay
 	
 	// HCAL TDC times have already been reference time subtracted;
@@ -2658,18 +2825,53 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
     //    dIDSH[i] = 0.0;
     
     if( htemp->GetEntries() >= 300 ){
-      FitGaus_FWHM( htemp );
+      TFitResultPtr fr = FitGaus_FWHM( htemp );
 
       htemp->Draw();
 
-      TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+      if( fr->IsValid() ){
       
-      double mean = ftemp->GetParameter("Mean");
-      //      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
-      double dmean = ftemp->GetParameter("Sigma");
-      
-      ToffSH[i] = mean;
-      dToffSH[i] = dmean;
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+
+	double mean = ftemp->GetParameter("Mean");
+	//      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	double dmean = ftemp->GetParameter("Sigma");
+	
+	ToffSH[i] = mean;
+	dToffSH[i] = dmean;
+      } else { //try a simpler fit method; Gaussian with mean +/- 10 ns
+	fr = htemp->Fit("gaus","SQ", "", htemp->GetMean()-10.0, htemp->GetMean() + 10.0 );
+
+	if( fr->IsValid() ){
+	  TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	  
+	  double mean = ftemp->GetParameter("Mean");
+	  //      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	  double dmean = ftemp->GetParameter("Sigma");
+	  
+	  ToffSH[i] = mean;
+	  dToffSH[i] = dmean;
+	} else {
+	  ToffSH[i] = htemp->GetMean();
+	  dToffSH[i] = htemp->GetRMS();
+	}
+      }
+    } else if( htemp->GetEntries() >= 100 ){
+      TFitResultPtr fr = htemp->Fit("gaus","SQ","",htemp->GetMean()-10.0, htemp->GetMean()+10.0);
+
+      if( fr->IsValid() ){
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	
+	double mean = ftemp->GetParameter("Mean");
+	//      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	double dmean = ftemp->GetParameter("Sigma");
+
+	ToffSH[i] = mean;
+	dToffSH[i] = dmean;
+      } else {
+	ToffSH[i] = htemp->GetMean();
+	dToffSH[i] = htemp->GetRMS();
+      }
     } else {
       listbadSH.insert( i );
     }
@@ -2761,7 +2963,7 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
 
       if( inear >= 0 ){
 	ToffSH[ibad] = ToffSH[inear];
-      }
+      } 
     }
   }
 
@@ -2806,7 +3008,7 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   
   c1->Clear();
   hdt_BBSH_hodo_vs_IDBBSH->Draw("colz");
-  gT0SH->Draw("PSAME");
+  gT0SH->Draw("PZSAME");
   c1->Update();
   gPad->Modified();
   gSystem->ProcessEvents();
@@ -2843,23 +3045,56 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
     //    dIDPS[i] = 0.0;
     
     if( htemp->GetEntries() >= 300 ){
-      FitGaus_FWHM( htemp );
+      TFitResultPtr fr = FitGaus_FWHM( htemp );
 
       htemp->Draw();
 
-      TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
-      
-      double mean = ftemp->GetParameter("Mean");
-      //double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
-      double dmean = ftemp->GetParameter("Sigma");
+      if( fr->IsValid() ){
+	
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	
+	double mean = ftemp->GetParameter("Mean");
+	//double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	double dmean = ftemp->GetParameter("Sigma");
+	
+	//These lines won't compile under older ROOT versions:
+	// double mean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParameter("Mean");
+	// double dmean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParError("Mean");
+	
+	ToffPS[i] = mean;
+	dToffPS[i] = dmean;
+      } else { //try a simpler fit method:
+	fr = htemp->Fit("gaus","SQ", "", htemp->GetMean()-10.0, htemp->GetMean() + 10.0 );
+	
+	if( fr->IsValid() ){
+	  TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	  
+	  double mean = ftemp->GetParameter("Mean");
+	  //      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	  double dmean = ftemp->GetParameter("Sigma");
+	  
+	  ToffPS[i] = mean;
+	  dToffPS[i] = dmean;
+	} else {
+	  ToffPS[i] = htemp->GetMean();
+	  dToffPS[i] = htemp->GetRMS();
+	}
+      }
+    } else if( htemp->GetEntries() >= 100 ){
+      TFitResultPtr fr = htemp->Fit("gaus","SQ","",htemp->GetMean()-10.0, htemp->GetMean()+10.0);
+      if( fr->IsValid() ){
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	
+	double mean = ftemp->GetParameter("Mean");
+	//      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	double dmean = ftemp->GetParameter("Sigma");
 
-      //These lines won't compile under older ROOT versions:
-      // double mean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParameter("Mean");
-      // double dmean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParError("Mean");
-
-      
-      ToffPS[i] = mean;
-      dToffPS[i] = dmean;
+	ToffPS[i] = mean;
+	dToffPS[i] = dmean;
+      } else {
+	ToffPS[i] = htemp->GetMean();
+	dToffPS[i] = htemp->GetRMS();
+      }
     } else {
       listbadPS.insert( i );
     }
@@ -2970,7 +3205,7 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   
   c1->Clear();
   hdt_BBPS_hodo_vs_IDBBPS->Draw("colz");
-  gT0PS->Draw("PSAME");
+  gT0PS->Draw("PZSAME");
   c1->Update();
   gPad->Modified();
   gSystem->ProcessEvents();
@@ -3011,23 +3246,57 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
     //    dIDHCAL[i] = 0.0;
     
     if( htemp->GetEntries() >= 300 ){
-      FitGaus_FWHM( htemp );
+      TFitResultPtr fr = FitGaus_FWHM( htemp );
 
       htemp->Draw();
 
-      TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+      if( fr->IsValid() ){
       
-      double mean = ftemp->GetParameter("Mean");
-      //      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
-      //double dmean = ftemp->GetParError(ftemp->GetParameter("Sigma"));
-      double dmean = ftemp->GetParameter("Sigma");
-      //These lines won't compile under older ROOT versions:
-      // double mean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParameter("Mean");
-      // double dmean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParError("Mean");
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	
+	double mean = ftemp->GetParameter("Mean");
+	//      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	//double dmean = ftemp->GetParError(ftemp->GetParameter("Sigma"));
+	double dmean = ftemp->GetParameter("Sigma");
+	//These lines won't compile under older ROOT versions:
+	// double mean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParameter("Mean");
+	// double dmean = ( (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus") ) )->GetParError("Mean");
 
+	ToffHCAL[i-1] = mean;
+	dToffHCAL[i-1] = dmean;
+      } else { //try a simpler fit method:
+	fr = htemp->Fit("gaus","SQ", "", htemp->GetMean()-10.0, htemp->GetMean() + 10.0 );
+	if( fr->IsValid() ){
+	  TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	  
+	  double mean = ftemp->GetParameter("Mean");
+	  //      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	  //double dmean = ftemp->GetParError(ftemp->GetParameter("Sigma"));
+	  double dmean = ftemp->GetParameter("Sigma");
+
+	  ToffHCAL[i-1] = mean;
+	  dToffHCAL[i-1] = dmean;
+	} else {
+	  ToffHCAL[i-1] = htemp->GetMean();
+	  dToffHCAL[i-1] = htemp->GetRMS();
+	}	  
+      }
+    } else if( htemp->GetEntries() >= 100 ){
+      TFitResultPtr fr = htemp->Fit("gaus","SQ","",htemp->GetMean()-10.0, htemp->GetMean()+10.0);
       
-      ToffHCAL[i-1] = mean;
-      dToffHCAL[i-1] = dmean;
+      if( fr->IsValid() ){
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	
+	double mean = ftemp->GetParameter("Mean");
+	//      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+	double dmean = ftemp->GetParameter("Sigma");
+
+	ToffHCAL[i-1] = mean;
+	dToffHCAL[i-1] = dmean;
+      } else {
+	ToffHCAL[i-1] = htemp->GetMean();
+	dToffHCAL[i-1] = htemp->GetRMS();
+      }	
     } else {
       listbadHCAL.insert( i );      
     }
@@ -3137,15 +3406,171 @@ void TOFcal_consolidated(const char *inputfilename, const char *outputfilename="
   
   c1->Clear();
   hdt_HCAL_hodo_vs_IDHCAL->Draw("colz");
-  gT0HCAL->Draw("PSAME");
+  gT0HCAL->Draw("PZSAME");
   c1->Update();
   gPad->Modified();
   gSystem->ProcessEvents();
-  pdffilename += ")";
+  //pdffilename += ")";
   c1->Print(pdffilename);
 
   gT0HCAL->Write("gT0_HCAL");
+
+  //After HCAL, let's do the GRINCH:
+
+  c1->Clear();
+  c1->Divide(4,4,.001,.001);
+
+  vector<double> IDGRINCH(512);
+  vector<double> dIDGRINCH(512,0.0);
+  vector<double> ToffGRINCH(512,0.0);
+  vector<double> dToffGRINCH(512,2.0);
+
+  set<int> listbadGRINCH; 
   
+  for( int i=0; i<512; i++ ){
+    c1->cd( i%16+1 );
+    TString histname, histtitle;
+    TH1D *htemp = hdt_GRINCH_hodo_vs_IDGRINCH->ProjectionY( Form("hdtGRINCHhodo_pmt%d", i), i+1, i+1 );
+
+    htemp->Draw();
+
+    IDGRINCH[i] = i;
+
+    ToffGRINCH[i] = GRINCH_t0[i]; //default to GRINCH_t0 (internal alignment offset)
+    
+    if( htemp->GetEntries() >= minhits_GRINCH_hododiff ){
+      TFitResultPtr fr = FitGaus_FWHM( htemp );
+
+      htemp->Draw();
+      if( fr->IsValid() ){
+	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+
+	double mean = ftemp->GetParameter("Mean");
+	double sigma = ftemp->GetParameter("Sigma");
+
+	double dmean = ftemp->GetParError( ftemp->GetParNumber("Mean") );
+	double dsigma = ftemp->GetParError( ftemp->GetParNumber("Sigma") );
+	//for a "good" fit, the sigma should be right around 2 ns: 
+
+	if( sigma >= 0.5 && sigma <= 8.0 && dmean < 0.3 && dsigma/sigma < 0.3 ){
+	
+	  ToffGRINCH[i] = mean;
+	  dToffGRINCH[i] = sigma;
+	} else {
+	  listbadGRINCH.insert(i);
+	}
+      } else {
+	listbadGRINCH.insert(i);
+      }
+	// else {
+      // 	fr = htemp->Fit("gaus","SQ", "", htemp->GetMean()-10.0, htemp->GetMean() + 10.0 );
+	
+      // 	if( fr->IsValid() ){
+      // 	  TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	  
+      // 	  double mean = ftemp->GetParameter("Mean");
+      // 	  //      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+      // 	  double dmean = ftemp->GetParameter("Sigma");
+
+      // 	  ToffGRINCH[i] = mean;
+      // 	  dToffGRINCH[i] = dmean;
+      // 	} else {
+      // 	  ToffGRINCH[i] = htemp->GetMean();
+      // 	  dToffGRINCH[i] = htemp->GetRMS();
+      // 	}
+      // }
+      // } // else if( htemp->GetEntries() >= 100 ){
+      // TFitResultPtr fr = htemp->Fit("gaus","SQ","",htemp->GetMean()-10.0, htemp->GetMean()+10.0);
+
+      // if( fr->IsValid() ){
+      // 	TF1 *ftemp = (TF1*) (htemp->GetListOfFunctions()->FindObject("gaus"));
+	
+      // 	double mean = ftemp->GetParameter("Mean");
+      // 	//      double dmean = ftemp->GetParError(ftemp->GetParNumber("Mean"));
+      // 	double dmean = ftemp->GetParameter("Sigma");
+
+      // 	ToffGRINCH[i] = mean;
+      // 	dToffGRINCH[i] = dmean;
+      // } else {
+      // 	ToffGRINCH[i] = htemp->GetMean();
+      // 	dToffGRINCH[i] = htemp->GetRMS();
+      // }
+    } else {
+      listbadGRINCH.insert( i );
+    }
+    if( (i+1)%16 == 0 ){
+      c1->Update();
+      gPad->Modified();
+      gSystem->ProcessEvents();
+      c1->Print( pdffilename );
+    }
+  }
+
+  for( auto ibad : listbadGRINCH ){
+    //Let's just do the most basic test; don't check position, just check PMT number. Find the closest PMT number up or down and take the average:
+    bool gotup=false, gotdown=false;
+    int testup = ibad+1;
+    int testdown = ibad-1;
+    double t0up = 0.0, t0down = 0.0;
+    while( !gotup && testup < 512 ){
+      if( listbadGRINCH.find( testup ) == listbadGRINCH.end() ){
+	gotup = true;
+	t0up = ToffGRINCH[testup];
+      }	
+      testup++;
+    }
+
+    while( !gotdown && testdown >= 0 ){
+      if( listbadGRINCH.find( testdown ) == listbadGRINCH.end() ){
+	gotdown = true;
+	t0down = ToffGRINCH[testdown];
+      }
+      testdown--;
+    }
+
+    double tsum = 0.0;
+    double n = 0.0;
+    if( gotup ){
+      n += 1.0;
+      tsum += t0up;
+    }
+    if( gotdown ){
+      n += 1.0;
+      tsum += t0down;
+    }
+
+    if( n > 0 ) ToffGRINCH[ibad] = tsum/n;
+  }
+    
+  // For the GRINCH, the new TDC offset is to be SUBTRACTED from the "raw" TDC time:
+  // Thus, the value to be subtracted will equal old offset + new offset
+
+  TGraphErrors *gT0GRINCH = new TGraphErrors( 512, &(IDGRINCH[0]), &(ToffGRINCH[0]), &(dIDGRINCH[0]), &(dToffGRINCH[0]) );
+  
+  c1->Clear();
+  hdt_GRINCH_hodo_vs_IDGRINCH->Draw("colz");
+  gT0GRINCH->SetMarkerStyle(20);
+  gT0GRINCH->SetMarkerColor(1);
+  gT0GRINCH->SetLineColor(1);
+
+  gT0GRINCH->Draw("PZSAME");
+
+  gT0GRINCH->Write("gT0_GRINCH");
+  
+  TString GRINCHdbfilename = outputfilename;
+  GRINCHdbfilename.ReplaceAll(".root",".dat");
+  GRINCHdbfilename.Prepend("db_GRINCH_");
+  
+  ofstream dbGRINCH(GRINCHdbfilename.Data());
+
+  dbGRINCH << "bb.grinch_tdc.tdc.offset = " << endl;
+  for( int i=0; i<512; i++ ){
+    if( i%16 == 0 && i > 0 ) dbGRINCH << endl;
+    dbGRINCH << Form( "%12.7g ", (GRINCH_t0[i]+ToffGRINCH[i] + oldGRINCHoffsets[i])/GRINCH_TDC_calib);
+  }
+
+  pdffilename += ")";
+  c1->Print(pdffilename);
   
   // c1->Update();
   // gPad->Modified();

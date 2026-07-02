@@ -47,7 +47,7 @@ bb.gem.m11.apvmap = 1 # UVA X/Y
 
 # basic flags controlling decoding:
 bb.gem.pedestalmode = 0
-bb.gem.commonmode_flag = 2 # 1 = Danning, 0 = sorting, 2 = histogramming
+bb.gem.commonmode_flag = 0 # 1 = Danning, 0 = sorting, 2 = histogramming
 bb.gem.commonmode_online_flag = 3 # 3 = Danning method during GMn, 4 = Danning \
 method during GEn
 # commenting this out as we can use the new default value of 640
@@ -463,7 +463,7 @@ bb.gem.trackchi2cut = 15.0 30.0 50.0
 bb.gem.trackchi2cut_hitquality = 20.0 30.0 30.0
 bb.gem.use_enhanced_chi2 = 0
 bb.gem.onlinezerosuppression = 1
-bb.gem.zerosuppress_nsigma = 5.0
+bb.gem.zerosuppress_nsigma = 3.0
 bb.gem.minhitsontrack = 3
 bb.gem.minhighqualityhitsontrack = 0 0 0 
 

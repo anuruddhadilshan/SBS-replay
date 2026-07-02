@@ -1,0 +1,103 @@
+# GEN HCAL output definition file Current 04.20.26
+
+variable sbs.hcal.a_p
+variable sbs.hcal.a_c
+variable sbs.hcal.a_amp_p
+variable sbs.hcal.adcelemID
+variable sbs.hcal.adcrow
+variable sbs.hcal.adccol
+variable sbs.hcal.adcxpos
+variable sbs.hcal.adcypos
+variable sbs.hcal.a_time
+variable sbs.hcal.ped
+
+variable sbs.hcal.e
+variable sbs.hcal.eblk
+variable sbs.hcal.againblk
+variable sbs.hcal.rowblk
+variable sbs.hcal.colblk
+variable sbs.hcal.x
+variable sbs.hcal.y
+variable sbs.hcal.nblk
+variable sbs.hcal.idblk
+variable sbs.hcal.atimeblk
+variable sbs.hcal.tdctimeblk
+variable sbs.hcal.tdctimeblk_tw
+variable sbs.hcal.index
+variable sbs.hcal.tdctime
+variable sbs.hcal.tdctime_tw
+variable sbs.hcal.adctime
+variable sbs.hcal.e_goodtdc
+variable sbs.hcal.eblk_goodtdc
+variable sbs.hcal.nblk_goodtdc
+variable sbs.hcal.rowblk_goodtdc
+variable sbs.hcal.colblk_goodtdc
+variable sbs.hcal.idblk_goodtdc
+block sbs.hcal.clus.*
+variable sbs.hcal.nclus
+block sbs.hcal.clus_blk.*
+block sbs.hcal.goodblock.*
+variable sbs.hcal.ngoodADChits
+variable sbs.trig.adcelemID
+variable sbs.trig.a_time
+variable sbs.trig.a_p
+variable sbs.trig.a_amp_p
+
+variable sbs.hcal.rftime
+variable sbs.hcal.trigtime
+
+block sbs.hcal.Ref.*
+
+block sbs.hcal.vtp.*
+
+
+############
+#Histograms#
+############ 
+
+# Page 1: HCal Timing Check
+# (macro) HCal Timing Check
+
+# Page 2: ADC Signal Plots
+th2d hped_vs_elem_hcal 'HCAL Pedestal vs element ID >> Stop run and Reset DAQ if ped scatters >200 mV; channel; ped [mV]' sbs.hcal.adcelemID[I] sbs.hcal.ped[I] 289 0. 289. 200 50. 250.
+th2d hAmp_vs_elem_ID 'HCAL Amplitude vs Module (saturation check); channel; Amp [mV]' sbs.hcal.adcelemID[I] sbs.hcal.a_amp_p[I] 289 0. 289. 5000 0 5000
+th2d hAmp_vs_int 'ADC amp vs int : HCAL; pC; mV' sbs.hcal.a_p[I] sbs.hcal.a_amp_p[I] 100 0 10 200 0 40 sbs.hcal.a_time[I]>0
+th2d hADCamp_vs_elem_hcal 'HCAL ADC amp. vs module: ZOOM >> Consult expert if no data in few channels; channel; Amplitude [mV]' sbs.hcal.adcelemID[I] sbs.hcal.a_amp_p[I] 289 0. 289. 1000 0 1000 sbs.hcal.a_time[I]>0 
+# th2d hADCamp_vs_elem_hcal_cut 'HCAL ADC amplitude vs module (missing TDC info); channel; Amplitude [mV]' sbs.hcal.adcelemID[I] sbs.hcal.a_amp_p[I] 289 0. 289. 500 0 500 sbs.hcal.tdc[I]==1e38&&sbs.hcal.a_time[I]>0 
+
+th1d hATIME_HCAL 'HCAL AdcTime over all channels; ns' sbs.hcal.a_time 250 1 201
+th2d hATIME_HCAL_VS_ID 'HCAL adcTime vs module >> Consult expert if no data in few channels; channel; atime [ns]' sbs.hcal.adcelemID[I] sbs.hcal.a_time[I] 289 0. 289. 200 0. 200. sbs.hcal.a_time[I]>0
+th1d hATIME_HCAL_Clus 'AdcTime HCAL Clus; ns' sbs.hcal.clus_blk.atime 250 1 201 
+
+# Page 3: TDC vs Module
+th1d hTDC_HCAL_noCut 'TDC over all channels : HCAL; ns' sbs.hcal.tdc 400 -200 200 
+th1d hTDC_HCAL 'TDC over all channels : HCAL; ns' sbs.hcal.tdc 300 -150 150 sbs.hcal.e>0.01
+th2d hTDC_vs_clus_ID 'HCAL TDC vs Module >> Consult expert if no data in few channels; channel; tdc time [ns]' sbs.hcal.tdcelemID[I] sbs.hcal.tdc[I] 288 0.5 288.5 300 -150 150 sbs.hcal.e>0.01
+
+# Page 3: HCal Trigger ADC Time
+# (macro) HCal Trigger ADC Time
+
+# Page 4: HCal Trigger ADC Time (Individual Sums)
+#th2d hADCt_hcalT_r 'HCal Trigger Sum r-{1-10} ADC Time; hcal trig ch; time [ns]' sbs.trig.adcelemID[I] sbs.trig.a_time[I] 11 0. 11. 240 0 240
+
+# Page 6: HCal Trigger ADC Amplitude (Individual Sums)
+#th2d hADCamp_hcalT_r 'HCal Trigger Sum r-{1-10} ADC Amplitude; hcal trig Ch; amplitude [mV]' sbs.trig.adcelemID[I] sbs.trig.a_amp_p[I] 10 0.5 10.5 500 0 500
+
+# Page 7: Cluster Plots
+th1d hNClus_vs_elem_hcal 'Number of clusters per event : HCAL; N' sbs.hcal.nclus 50 0 80  #Multiplicity
+th1d hNBlk_per_cluster 'Number of blocks per cluster : HCAL; N' sbs.hcal.nblk 50 0 50 
+th2d hE_vs_mult_clus 'Primary Cluster E vs Cluster Size; GeV; Number of blocks' sbs.hcal.e sbs.hcal.nblk 100 0 5.0 50 0 50
+th2d hClusE_vs_elem_hcal 'Primary Cluster Energy vs element ID : HCAL; channel; GeV' sbs.hcal.clus_blk.id[I] sbs.hcal.clus_blk.e[I] 288 0.5 288.5 100 0 0.5 sbs.hcal.clus_blk.atime[I]>0
+
+# Page 8: Cluster Heatmap
+th2d hClus_pos_hcal 'Position of best cluster : HCal; Column; Row' sbs.hcal.colblk sbs.hcal.rowblk 12 0 12 24 0 24 sbs.hcal.nclus>0
+#th2d hClus_pos_hcal_cut 'Position of best cluster : HCal coincidence; Column; Row' sbs.hcal.colblk sbs.hcal.rowblk 12 0 12 24 0 24 sbs.hcal.nclus>0&&(g.trigbits==4||g.trigbits==5)
+
+# Page 9: HCal ADC Time
+# (macro) ADC Time No LED
+
+# Page 10: Trigger TDC Times
+# (macro) Coincidence/BBCal Difference
+# (macro) Coincidence/Trigger Difference
+# (macro) HCal/BBCal Difference
+# (macro) RF Time
