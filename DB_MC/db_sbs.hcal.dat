@@ -186,8 +186,32 @@ sbs.hcal.tdc.GoodTimeCut = 80.0
 sbs.hcal.Rmax_dis = 0.3
 ## Mininum energy  for a cluster center (not really used right now)
 sbs.hcal.emin  = 0.0125
+
+--------[ 2021-10-18 05:30:00 ]
+sbs.hcal.emin_clSeed = 0.0025
+sbs.hcal.emin_clTotal = 0.005
+
+--------[ 2021-11-08 17:00:00 ]
 sbs.hcal.emin_clSeed = 0.02
 sbs.hcal.emin_clTotal = 0.04
+
+--------[ 2021-11-17 08:00:00 ]
+sbs.hcal.emin_clSeed = 0.025
+sbs.hcal.emin_clTotal = 0.05
+
+--------[ 2022-01-10 22:30:00 ]
+sbs.hcal.emin_clSeed = 0.015
+sbs.hcal.emin_clTotal = 0.03
+
+--------[ 2022-01-20 07:30:00 ]
+sbs.hcal.emin_clSeed = 0.0025
+sbs.hcal.emin_clTotal = 0.005
+
+--------[ 2022-02-01 17:42:00 ]
+sbs.hcal.emin_clSeed = 0.0025
+sbs.hcal.emin_clTotal = 0.005
+
+
 ## Maximum time difference between cluster seed & additional clusters [Default = 1000ns]
 sbs.hcal.tmax = 1000.0
 
