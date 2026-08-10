@@ -901,8 +901,8 @@ sbs.gemFT.corrcoeff_cut = 0.5
 sbs.gemFT.peakprominence_minsigma = 2.0
 sbs.gemFT.peakprominence_minfraction = 0.1
 # change to "soft hit filtering:
-sbs.gemFT.filterflag1D = 0 # -1 = no filtering: don't require 1D hits to pass any cuts other than basic zero suppression
-sbs.gemFT.filterflag2D = 0  # 1 = "hard" filtering: require 2D hits to pass all cuts
+sbs.gemFT.filterflag1D = -1 # -1 = no filtering: don't require 1D hits to pass any cuts other than basic zero suppression
+sbs.gemFT.filterflag2D = -1  # 1 = "hard" filtering: require 2D hits to pass all cuts
 
 sbs.gemFT.use_enhanced_chi2 = 1
 sbs.gemFT.trackchi2cut_hitquality = 12.0
