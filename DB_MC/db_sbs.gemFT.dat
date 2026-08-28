@@ -902,7 +902,7 @@ sbs.gemFT.peakprominence_minfraction = 0.1
 sbs.gemFT.filterflag1D = -1 # -1 = no filtering: don't require 1D hits to pass any cuts other than basic zero suppression
 sbs.gemFT.filterflag2D = -1  # 1 = "hard" filtering: require 2D hits to pass all cuts
 
-sbs.gemFT.use_enhanced_chi2 = 1
+sbs.gemFT.use_enhanced_chi2 = 0
 sbs.gemFT.trackchi2cut_hitquality = 12.0
 
 # Parameters controlling tracking:
@@ -927,11 +927,11 @@ sbs.gemFT.trackchi2cut = 15 20 25 30 40
 sbs.gemFT.suppressfirstlast = -1
 
 
-## Ped and CM files for testing FT digitzation w/ varying ped and CM.
+# Ped and CM files for testing FT digitzation w/ varying ped and CM.
 sbs.gemFT.pedfile = gemped/mcreplay_out_pedfile.dat
 sbs.gemFT.cmfile = gemped/mcreplay_out_pedfile.dat
 
-## TESTING 'full r/o' digitzatoin.
+# TESTING 'full r/o' digitzatoin.
 sbs.gemFT.onlinezerosuppress = 1 #1 #0
 sbs.gemFT.zerosuppress = 1 #1
 sbs.gemFT.pedsub_online = 1 #1 #0  #Pedestal offsets are NOT included in digitization now. ADR.
@@ -941,10 +941,10 @@ sbs.gemFT.commonmode_flag = -1 #-1 #0
 sbs.gemFT.chan_cm_flags = 640 # defines the "dummy" reference channel for storing the cm_enable and build_all_samples flags -(40 x 16) "sbsvtp2" and "sbsvtp4"currently has 36 and 20 MPDs respectively right now. 
 sbs.gemFT.commonmode_nstriplo = 10 # for sorting method
 sbs.gemFT.commonmode_nstriphi = 50 # for sorting method... for an occupancy ~40%
-#sbs.gemFT.tryfasttrack = 0
+# sbs.gemFT.tryfasttrack = 0
 
 sbs.gemFT.do_goodADC_tracking = 1
 
 sbs.gemFT.ml_model_path = /home/anu-ubun/ML_GEM_HitFinder/Deployment/models/gem_hitfinder.onnx
 
-sbs.gemFT.m0.do_ML_hitfinding = 1
+sbs.gemFT.m0.do_ML_hitfinding = 0
