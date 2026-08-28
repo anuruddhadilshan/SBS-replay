@@ -1378,6 +1378,36 @@ sbs.gemFPP.m31.chanmap =
       19   19  19   0  11   0  11   0    1 # Strip
 
 
+############### Parameters searched by SBSGEMSpectrometerTracker::ReadDatabase() ######################
+# Parameters controlling 1D clustering and 2D hit finding (updating for replay with background)
+sbs.gemFPP.corrcoeff_cut = 0.4
+sbs.gemFPP.deltat_cut = 4.5 # sigmas
+sbs.gemFPP.ADCasym_cut = 0.8
 
+sbs.gemFPP.peakprominence_minsigma = 2.0
+sbs.gemFPP.peakprominence_minfraction = 0.1
 
+sbs.gemFPP.filterflag1D = -1
+sbs.gemFPP.filterflag2D = -1
 
+############### Parameters searched by SBSGEMSpectrometerTracker::ReadDatabase() ######################
+
+# parameters controlling tracking:
+sbs.gemFPP.minhitsontrack = 4
+
+sbs.gemFPP.maxhitcombos = 25000
+sbs.gemFPP.maxhitcombos_inner = 25000
+sbs.gemFPP.maxhitcombos_total = 1.e24
+
+sbs.gemFPP.gridbinwidthx = 0.005
+sbs.gemFPP.gridbinwidthy = 0.005
+sbs.gemFPP.gridedgetolerancex = 0.0015
+sbs.gemFPP.gridedgetolerancey = 0.0015
+
+sbs.gemFPP.trackchi2cut = 15 20 25 30 30 
+
+sbs.gemFPP.do_efficiencies = 1
+sbs.gemFPP.efficiency_bin_width_1D = 0.02
+sbs.gemFPP.efficiency_bin_width_2D = 0.04
+
+sbs.gemFPP.suppressfirstlast = -1

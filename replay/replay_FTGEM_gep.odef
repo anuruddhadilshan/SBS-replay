@@ -23,6 +23,15 @@ variable sbs.gemFT.n2Dhit_layer
 # block sbs.gemFT.*.strip.nstrips_keepV
 # block sbs.gemFT.*.strip.nstrips_keep_lmaxU
 # block sbs.gemFT.*.strip.nstrips_keep_lmaxV
+block sbs.gemFT.m*.hit.*
+block sbs.gemFT.m*.clust.*
+block sbs.gemFT.m*.roi.*
+#block sbs.gemFT.m*.strip.*
+block sbs.gemFT.m*.goodADCclust.*
+block sbs.gemFT.m*.goodADChit.*
+block sbs.gemFT.goodADCtrack.*
+block sbs.gemFT.goodADCtrackhit.*
+
 
 #Cuts: 
 cut singletrack sbs.gemFT.track.ntrack==1
