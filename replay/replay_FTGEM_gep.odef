@@ -23,7 +23,7 @@ variable sbs.gemFT.n2Dhit_layer
 # block sbs.gemFT.*.strip.nstrips_keepV
 # block sbs.gemFT.*.strip.nstrips_keep_lmaxU
 # block sbs.gemFT.*.strip.nstrips_keep_lmaxV
-
+block sbs.gemFT.m*.hit.*
 #Cuts: 
 cut singletrack sbs.gemFT.track.ntrack==1
 cut anytrack sbs.gemFT.track.ntrack>0
