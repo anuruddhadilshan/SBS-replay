@@ -1411,3 +1411,9 @@ sbs.gemFPP.efficiency_bin_width_1D = 0.02
 sbs.gemFPP.efficiency_bin_width_2D = 0.04
 
 sbs.gemFPP.suppressfirstlast = -1
+
+# MC sample format: 0 legacy, 1 CM+online ZS, 2 CM/full, 3 raw/full.
+sbs.gemFPP.mc_input_mode = 0
+
+# Legacy digitizer retains a 1500 ADC pedestal; subtract it during replay.
+sbs.gemFPP.pedsub_online = 0

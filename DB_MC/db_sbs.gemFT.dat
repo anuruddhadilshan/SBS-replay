@@ -930,8 +930,8 @@ sbs.gemFT.suppressfirstlast = -1
 
 
 ## Ped and CM files for testing FT digitzation w/ varying ped and CM.
-sbs.gemFT.pedfile = gemped/mcreplay_out_pedfile.dat
-sbs.gemFT.cmfile = gemped/mcreplay_out_pedfile.dat
+sbs.gemFT.pedfile = gemped/ft_mc_pedestal_rms.dat
+sbs.gemFT.cmfile = gemped/ft_mc_commonmode.dat
 
 ## TESTING 'full r/o' digitzatoin.
 sbs.gemFT.onlinezerosuppress = 1 #1 #0
@@ -946,3 +946,9 @@ sbs.gemFT.commonmode_nstriphi = 50 # for sorting method... for an occupancy ~40%
 #sbs.gemFT.tryfasttrack = 0
 
 sbs.gemFT.do_goodADC_tracking = 1
+
+# MC sample format: 0 legacy, 1 CM+online ZS, 2 CM/full, 3 raw/full.
+sbs.gemFT.mc_input_mode = 3
+sbs.gemFT.commonmode_flag = 0
+# No extra correction of the already subtracted online CM estimate.
+sbs.gemFT.correct_common_mode = 0
