@@ -58,6 +58,8 @@ sbs.gemFT.maxnv_charge = 4
 sbs.gemFT.maxnu_pos = 2
 sbs.gemFT.maxnv_pos = 2
 
+# Historical ZS MC pedestal references (inactive).
+# For legacy FULL READOUT, use PROFILE B at the end of this file instead.
 # sbs.gemFT.m0.pedu = 1500
 # sbs.gemFT.m0.rmsu = 8
 # sbs.gemFT.m0.pedv = 1500
@@ -929,26 +931,213 @@ sbs.gemFT.trackchi2cut = 15 20 25 30 40
 sbs.gemFT.suppressfirstlast = -1
 
 
-## Ped and CM files for testing FT digitzation w/ varying ped and CM.
-sbs.gemFT.pedfile = gemped/ft_mc_pedestal_rms.dat
-sbs.gemFT.cmfile = gemped/ft_mc_commonmode.dat
+# =============================================================================
+# FT MC INPUT / CALIBRATION PROFILES
+# =============================================================================
+# Enable exactly ONE complete profile below by commenting/uncommenting its
+# assignment lines. PROFILE A is active; PROFILE B is initially commented out.
+# To replay legacy full readout: comment ALL assignments in A, then uncomment
+# ALL assignments in B, including every module's CM and strip-noise entries.
+# To return to new digitization: reverse those changes for the ENTIRE blocks.
+# Do not leave legacy CM arrays active with A: they can prevent cmfile loading.
+# Earlier default input settings near the top are overridden by these profiles.
+# Geometry, clustering, tracking and the shared settings below apply to both.
+#
+# Input modes describe processing, not the age of the digitizer:
+#   0: historical ZS MC interface
+#   1: online CM subtraction + online ZS
+#   2: online CM subtraction, full readout
+#   3: raw full readout; replay calculates/subtracts CM
+# Both the new raw/full sample and the legacy fixed-CM/full sample use mode 3.
+# =============================================================================
 
-## TESTING 'full r/o' digitzatoin.
-sbs.gemFT.onlinezerosuppress = 1 #1 #0
-sbs.gemFT.zerosuppress = 1 #1
-sbs.gemFT.pedsub_online = 1 #1 #0  #Pedestal offsets are NOT included in digitization now. ADR.
-sbs.gemFT.pedestalmode = 0
-sbs.gemFT.commonmode_flag = -1 #-1 #0
+# Shared readout-channel and sorting configuration:
+sbs.gemFT.chan_cm_flags = 640
+sbs.gemFT.commonmode_nstriplo = 10
+sbs.gemFT.commonmode_nstriphi = 50
 #sbs.gemFT.commonmode_minstrips = 5
-sbs.gemFT.chan_cm_flags = 640 # defines the "dummy" reference channel for storing the cm_enable and build_all_samples flags -(40 x 16) "sbsvtp2" and "sbsvtp4"currently has 36 and 20 MPDs respectively right now. 
-sbs.gemFT.commonmode_nstriplo = 10 # for sorting method
-sbs.gemFT.commonmode_nstriphi = 50 # for sorting method... for an occupancy ~40%
 #sbs.gemFT.tryfasttrack = 0
-
 sbs.gemFT.do_goodADC_tracking = 1
 
-# MC sample format: 0 legacy, 1 CM+online ZS, 2 CM/full, 3 raw/full.
+# ---------------- BEGIN PROFILE A: NEW DIGITIZATION (ACTIVE) ------------------
+# Per-strip RMS and per-APV CM calibration come from the digitizer calibration.
+# The existing mode-3 configuration is retained. For modes 1 or 2, change
+# mc_input_mode to describe the actual input; it sets the online ZS state.
+sbs.gemFT.pedfile = gemped/ft_mc_pedestal_rms.dat
+sbs.gemFT.cmfile = gemped/ft_mc_commonmode.dat
 sbs.gemFT.mc_input_mode = 3
 sbs.gemFT.commonmode_flag = 0
-# No extra correction of the already subtracted online CM estimate.
 sbs.gemFT.correct_common_mode = 0
+# Preserved existing flag: mode 3 overrides it to false (full readout).
+sbs.gemFT.onlinezerosuppress = 1
+sbs.gemFT.zerosuppress = 1
+sbs.gemFT.pedsub_online = 1
+sbs.gemFT.pedestalmode = 0
+# Optional CM diagnostics for new digitization; enable when needed:
+# sbs.gemFT.plot_common_mode = 1
+# ------------------------- END PROFILE A -------------------------------------
+
+# ------------- BEGIN PROFILE B: LEGACY FULL READOUT (COMMENTED) ---------------
+# Requires digitized samples with no online ZS and no online CM subtraction.
+# True injected CM is fixed at 1500 ADC: its physical fluctuation RMS is ZERO.
+# Strip noise is independent, sigma=20 ADC/sample; average-of-six RMS=20/sqrt(6).
+# No pedfile/cmfile assignments belong in this profile. Disable A completely.
+# Pedestal means below are zero: replay removes the 1500 baseline as measured CM.
+# commonmode_meanU/V provide references for the auxiliary diagnostic estimators.
+# commonmode_rmsU/V=10 is their POSITIVE SEARCH WIDTH (existing replay default),
+# NOT the injected CM fluctuation RMS; it adds no noise or fluctuations to MC.
+# Sorting calculates the actual CM from the samples and does not need that width.
+# Setting the diagnostic width to zero breaks the current histogram CM method.
+# Every CM array has one entry per APV, in physical strip-position order.
+# Uncomment ALL assignment lines in this block together.
+# -----------------------------------------------------------------------------
+# sbs.gemFT.mc_input_mode = 3
+# sbs.gemFT.commonmode_flag = 0
+# sbs.gemFT.correct_common_mode = 0
+# sbs.gemFT.onlinezerosuppress = 0
+# sbs.gemFT.zerosuppress = 1
+# sbs.gemFT.pedestalmode = 0
+# sbs.gemFT.pedsub_online = 1
+# sbs.gemFT.plot_common_mode = 1
+
+# m0: 31 U APVs, 27 V APVs
+# sbs.gemFT.m0.pedu = 0
+# sbs.gemFT.m0.pedv = 0
+# sbs.gemFT.m0.rmsu = 8.1649658093
+# sbs.gemFT.m0.rmsv = 8.1649658093
+# sbs.gemFT.m0.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m0.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m0.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m0.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m1: 31 U APVs, 27 V APVs
+# sbs.gemFT.m1.pedu = 0
+# sbs.gemFT.m1.pedv = 0
+# sbs.gemFT.m1.rmsu = 8.1649658093
+# sbs.gemFT.m1.rmsv = 8.1649658093
+# sbs.gemFT.m1.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m1.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m1.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m1.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m2: 30 U APVs, 30 V APVs
+# sbs.gemFT.m2.pedu = 0
+# sbs.gemFT.m2.pedv = 0
+# sbs.gemFT.m2.rmsu = 8.1649658093
+# sbs.gemFT.m2.rmsv = 8.1649658093
+# sbs.gemFT.m2.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m2.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m2.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m2.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m3: 30 U APVs, 30 V APVs
+# sbs.gemFT.m3.pedu = 0
+# sbs.gemFT.m3.pedv = 0
+# sbs.gemFT.m3.rmsu = 8.1649658093
+# sbs.gemFT.m3.rmsv = 8.1649658093
+# sbs.gemFT.m3.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m3.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m3.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m3.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m4: 30 U APVs, 30 V APVs
+# sbs.gemFT.m4.pedu = 0
+# sbs.gemFT.m4.pedv = 0
+# sbs.gemFT.m4.rmsu = 8.1649658093
+# sbs.gemFT.m4.rmsv = 8.1649658093
+# sbs.gemFT.m4.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m4.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m4.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m4.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m5: 30 U APVs, 30 V APVs
+# sbs.gemFT.m5.pedu = 0
+# sbs.gemFT.m5.pedv = 0
+# sbs.gemFT.m5.rmsu = 8.1649658093
+# sbs.gemFT.m5.rmsv = 8.1649658093
+# sbs.gemFT.m5.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m5.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m5.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m5.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m6: 10 U APVs, 12 V APVs
+# sbs.gemFT.m6.pedu = 0
+# sbs.gemFT.m6.pedv = 0
+# sbs.gemFT.m6.rmsu = 8.1649658093
+# sbs.gemFT.m6.rmsv = 8.1649658093
+# sbs.gemFT.m6.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m6.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m6.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m6.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m7: 10 U APVs, 12 V APVs
+# sbs.gemFT.m7.pedu = 0
+# sbs.gemFT.m7.pedv = 0
+# sbs.gemFT.m7.rmsu = 8.1649658093
+# sbs.gemFT.m7.rmsv = 8.1649658093
+# sbs.gemFT.m7.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m7.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m7.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m7.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m8: 10 U APVs, 12 V APVs
+# sbs.gemFT.m8.pedu = 0
+# sbs.gemFT.m8.pedv = 0
+# sbs.gemFT.m8.rmsu = 8.1649658093
+# sbs.gemFT.m8.rmsv = 8.1649658093
+# sbs.gemFT.m8.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m8.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m8.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m8.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m9: 10 U APVs, 12 V APVs
+# sbs.gemFT.m9.pedu = 0
+# sbs.gemFT.m9.pedv = 0
+# sbs.gemFT.m9.rmsu = 8.1649658093
+# sbs.gemFT.m9.rmsv = 8.1649658093
+# sbs.gemFT.m9.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m9.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m9.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m9.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m10: 10 U APVs, 12 V APVs
+# sbs.gemFT.m10.pedu = 0
+# sbs.gemFT.m10.pedv = 0
+# sbs.gemFT.m10.rmsu = 8.1649658093
+# sbs.gemFT.m10.rmsv = 8.1649658093
+# sbs.gemFT.m10.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m10.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m10.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m10.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m11: 10 U APVs, 12 V APVs
+# sbs.gemFT.m11.pedu = 0
+# sbs.gemFT.m11.pedv = 0
+# sbs.gemFT.m11.rmsu = 8.1649658093
+# sbs.gemFT.m11.rmsv = 8.1649658093
+# sbs.gemFT.m11.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m11.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m11.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m11.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m12: 10 U APVs, 12 V APVs
+# sbs.gemFT.m12.pedu = 0
+# sbs.gemFT.m12.pedv = 0
+# sbs.gemFT.m12.rmsu = 8.1649658093
+# sbs.gemFT.m12.rmsv = 8.1649658093
+# sbs.gemFT.m12.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m12.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m12.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m12.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# m13: 10 U APVs, 12 V APVs
+# sbs.gemFT.m13.pedu = 0
+# sbs.gemFT.m13.pedv = 0
+# sbs.gemFT.m13.rmsu = 8.1649658093
+# sbs.gemFT.m13.rmsv = 8.1649658093
+# sbs.gemFT.m13.commonmode_meanU = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m13.commonmode_meanV = 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500 1500
+# sbs.gemFT.m13.commonmode_rmsU = 10 10 10 10 10 10 10 10 10 10
+# sbs.gemFT.m13.commonmode_rmsV = 10 10 10 10 10 10 10 10 10 10 10 10
+
+# ------------------------- END PROFILE B -------------------------------------
