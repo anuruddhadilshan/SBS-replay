@@ -2835,12 +2835,19 @@ sbs.gemFT.dump_geometry_info = 0
 
 
 ---------[ 2025-04-01 00:00:00 ] # ML_hit_finding testing.
-sbs.gemFT.m0.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L0/gem_hitfinder.onnx
-sbs.gemFT.m1.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L1/gem_hitfinder_L1.onnx
-sbs.gemFT.m2.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L2/gem_hitfinder_L2.onnx
-sbs.gemFT.m3.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L3/gem_hitfinder_L3.onnx
-sbs.gemFT.m4.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L4/gem_hitfinder_L4.onnx
-sbs.gemFT.m5.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L5/gem_hitfinder_L5.onnx
+#sbs.gemFT.m0.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L0/gem_hitfinder.onnx 
+#sbs.gemFT.m1.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L1/gem_hitfinder_L1.onnx
+#sbs.gemFT.m2.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L2/gem_hitfinder_L2.onnx
+#sbs.gemFT.m3.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L3/gem_hitfinder_L3.onnx
+#sbs.gemFT.m4.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L4/gem_hitfinder_L4.onnx
+#sbs.gemFT.m5.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L5/gem_hitfinder_L5.onnx
+
+sbs.gemFT.m0.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L0_fast_dilated/gem_hitfinder_L0_fast_dilated.onnx 
+sbs.gemFT.m1.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L1_fast_dilated/gem_hitfinder_L1_fast_dilated.onnx
+sbs.gemFT.m2.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L2_fast_dilated/gem_hitfinder_L2_fast_dilated.onnx
+sbs.gemFT.m3.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L3_fast_dilated/gem_hitfinder_L3_fast_dilated.onnx
+sbs.gemFT.m4.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L4_fast_dilated/gem_hitfinder_L4_fast_dilated.onnx
+sbs.gemFT.m5.ml_model_path = /work/halla/sbs/bhasitha/Tracking_ML/Deployment/models/FT_L5_fast_dilated/gem_hitfinder_L5_fast_dilated.onnx
 
 sbs.gemFT.m0.do_ML_hitfinding = 0
 sbs.gemFT.m1.do_ML_hitfinding = 0
