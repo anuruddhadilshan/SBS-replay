@@ -222,7 +222,7 @@ sbs.hcal.tmax = 1000.0
 
 sbs.hcal.position = 0.0 0.0 4.895
 
--------[ 2024-10-01 00:00:00 ] # Start GEP
+-------[ 2024-10-01 00:00:00 ] # Start GEP (Kin. 1, may need slightly different for Kin. 2)
 
 # in g4sbs GEP HCAL is always 10 m from target, in optics coord system, it is at 0 0 (HCALdist - opticsdist) = 6.315 m
 #sbs.hcal.position = 0.0 0.0 6.315
@@ -232,4 +232,29 @@ sbs.hcal.position = 0.0 0.0 4.895
 #sbs.hcal.position = 0.165 0.0 6.315
 
 # implement "effective z" for HCAL constraint:
-sbs.hcal.position = 0.165 0.0 6.639 
+sbs.hcal.position = 0.165 0.0 6.639
+
+# let's correct the HCAL position to implement both "effective z" and survey offsets:
+# Kin. 1 survey has HCAL 1.44 mm above nominal, putting its center at X_SBS = -0.00144 m
+# since X_GEM = -0.165 m in SBS coordinates, X_HCAL(GEM coords) = X_HCAL (SBS coords) + 0.165 = 0.16 
+# Kin. 1 survey has HCAL 1.573 cm to beam left of real SBS center line (according to my interpretation of the survey)
+# Kin. 1 survey has HCAL 10.00387 meters from real SBS pointing origin; 10.00387 - 3.6824 = 6.3215 m (determine effective z offset later):
+
+# ACTUAL HCAL position in GEM coord. system:
+#sbs.hcal.position = 0.16356 0.01573 6.3215 
+
+# with adjustment for "effective z" (Kin. 1-specific)
+sbs.hcal.position = 0.16356 0.01573 6.701 
+
+sbs.hcal.adc.gain = 2.0e-3
+
+--------[ 2025-05-01 11:59:00 ] # GEP3
+
+# ACTUAL HCAL position in SBS GEM coordinates accounting for survey offsets: 
+#sbs.hcal.position = 0.16675 0.00037 6.2838
+
+
+#with adjustment for "effective z"
+
+sbs.hcal.position = 0.16675 0.00037 6.71844
+

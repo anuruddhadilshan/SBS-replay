@@ -11,6 +11,7 @@ FTROI.earm_name = earm
 FTROI.edet_name = ecal
 FTROI.parm_name = sbs
 FTROI.pdet_name = gemFT
+FTROI.z0targ = -0.09
 
 ------[ 2025-05-04 11:59:00 ] # GEP3
 
@@ -24,3 +25,4 @@ FTROI.earm_name = earm
 FTROI.edet_name = ecal
 FTROI.parm_name = sbs
 FTROI.pdet_name = gemFT
+FTROI.z0targ = -0.1
