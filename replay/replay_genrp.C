@@ -251,11 +251,11 @@ void replay_genrp(UInt_t runnum=10491, Long_t nevents=-1, Long_t firstevent=1, c
     pathlist.push_back( "/adaq1/data1/sbs" );
 
   // Do not use wildcard filenames with this directory
-  if( prefix != "/cache/mss/halla/sbs/raw" )
-    pathlist.push_back( "/cache/mss/halla/sbs/raw" );
+  if( prefix != "/cache/halla/sbs/raw" )
+    pathlist.push_back( "/cache/halla/sbs/raw" );
 
-  if( prefix != "/cache/mss/halla/sbs/GEnRP/raw" )
-    pathlist.push_back( "/cache/mss/halla/sbs/GEnRP/raw" );
+  if( prefix != "/cache/halla/sbs/GEnRP/raw" )
+    pathlist.push_back( "/cache/halla/sbs/GEnRP/raw" );
 
   if( prefix != "/cache/halla/sbs/GEnRP/raw" )
     pathlist.push_back( "/cache/halla/sbs/GEnRP/raw" );

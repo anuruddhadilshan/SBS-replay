@@ -261,12 +261,12 @@ bb.magdist = 1.63
 ebeam = 4.300
 
 # nominal kinematics:
-sbs.theta = -24.7
+sbs.theta = -24.6916
 sbs.pcentral = 3.3
 sbs.magdist = 2.25
 sbs.hcaldist = 9.007 # from survey
 
-bb.theta = 42.5
+bb.theta = 42.544
 bb.pcentral = 2.0
 bb.magdist = 1.5515 # from survey
 
