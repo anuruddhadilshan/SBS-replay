@@ -47,7 +47,7 @@ bb.gem.m7.apvmap = 1 # UVA X/Y
 
 # basic flags controlling decoding:
 bb.gem.pedestalmode = 0
-bb.gem.commonmode_flag = 2 # 0 = sorting, 1 = "Danning method", 2 = histogramming method cm subtraction
+bb.gem.commonmode_flag = 0 # 0 = sorting, 1 = "Danning method", 2 = histogramming method cm subtraction
 bb.gem.commonmode_online_flag = 4 # 3 = Danning method during GMn, 4 = Danning method during GEn
 # commenting out definition of cm flags channel
 #bb.gem.chan_cm_flags = 512 # defines the "dummy" reference channel for storing the cm_enable and build_all_samples flags

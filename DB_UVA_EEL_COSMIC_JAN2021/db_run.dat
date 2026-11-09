@@ -10,6 +10,8 @@ sbs.colldist = 1.5
 sbs.off_x = 0
 sbs.off_y = 0
 sbs.off_z = 0
+sbs.magdist = 1.6
 
 bb.theta    = 33.0                                                              
 bb.pcentral = 2.0 
+bb.magdist = 1.55
