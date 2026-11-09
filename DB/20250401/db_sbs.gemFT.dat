@@ -1,4 +1,3 @@
-
 # Layer 0: UVaXW (L0)
 # Layer 1: UVaXW (L1)
 # Layer 2: UVaUV (L2)
@@ -1387,34 +1386,65 @@ sbs.gemFT.pedsub_online = 1
 # start production data with analyzer in; realign to account for difference between field-on/field-off. First layer of front tracker was fixed in this alignment:
 
 
+# sbs.gemFT.m0.position =    -0.002192969   -0.0003452624     0.001014518
+# sbs.gemFT.m0.angle =       -1.299408        0.927087     -0.01436749
+# sbs.gemFT.m1.position =    -0.002105199    0.0008065975      0.07082575
+# sbs.gemFT.m1.angle =      -0.8516164        1.003855     -0.06197564
+# sbs.gemFT.m2.position =    0.0004498966   -0.0003978733       0.2101962
+# sbs.gemFT.m2.angle =       -1.073536       0.8227393       0.2178734
+# sbs.gemFT.m3.position =     0.003821412     0.006564228       0.3496131
+# sbs.gemFT.m3.angle =       -1.115179       0.7206547      -0.1359436
+# sbs.gemFT.m4.position =     0.005952468    -0.000938697       0.4961346
+# sbs.gemFT.m4.angle =      -0.8890403        0.812602        0.210324
+# sbs.gemFT.m5.position =     0.007839961     0.002209031       0.6340678
+# sbs.gemFT.m5.angle =       -0.973361       0.7324572     -0.08435505
+# sbs.gemFT.m6.position =      -0.7628112     0.003393371       0.7926007
+# sbs.gemFT.m6.angle =       -1.046356       0.2588486      -0.1187663
+# sbs.gemFT.m7.position =      -0.2510401     0.002238799       0.7445862
+# sbs.gemFT.m7.angle =       -1.357213       0.4032532     -0.06891023
+# sbs.gemFT.m8.position =       0.2619563   -0.0007499247       0.7767765
+# sbs.gemFT.m8.angle =      -0.7051154        0.339835     -0.02120029
+# sbs.gemFT.m9.position =        0.772186    0.0001901603       0.7266947
+# sbs.gemFT.m9.angle =      -0.6260749         1.23612     -0.04166257
+# sbs.gemFT.m10.position =      -0.7616801     0.004302916       0.9180964
+# sbs.gemFT.m10.angle =       -1.022046     -0.03887218     -0.08659501
+# sbs.gemFT.m11.position =      -0.2494009     0.002830733       0.8710197
+# sbs.gemFT.m11.angle =       -1.226832      0.06433925      0.06220228
+# sbs.gemFT.m12.position =       0.2616985     0.001268103       0.9066948
+# sbs.gemFT.m12.angle =       -0.751813       0.1560721      -0.0238541
+# sbs.gemFT.m13.position =       0.7730414    0.0006709589       0.8541257
+# sbs.gemFT.m13.angle =      -0.3963464        1.577535     -0.02565919
+
+#NAVV 9/22/26 - Results after improving internal and front-to-back alignments using LH2 data
+#Modules 0 and 11 were fixed in the final iteration 
 sbs.gemFT.m0.position =    -0.002192969   -0.0003452624     0.001014518
 sbs.gemFT.m0.angle =       -1.299408        0.927087     -0.01436749
-sbs.gemFT.m1.position =    -0.002105199    0.0008065975      0.07082575
-sbs.gemFT.m1.angle =      -0.8516164        1.003855     -0.06197564
-sbs.gemFT.m2.position =    0.0004498966   -0.0003978733       0.2101962
-sbs.gemFT.m2.angle =       -1.073536       0.8227393       0.2178734
-sbs.gemFT.m3.position =     0.003821412     0.006564228       0.3496131
-sbs.gemFT.m3.angle =       -1.115179       0.7206547      -0.1359436
-sbs.gemFT.m4.position =     0.005952468    -0.000938697       0.4961346
-sbs.gemFT.m4.angle =      -0.8890403        0.812602        0.210324
-sbs.gemFT.m5.position =     0.007839961     0.002209031       0.6340678
-sbs.gemFT.m5.angle =       -0.973361       0.7324572     -0.08435505
-sbs.gemFT.m6.position =      -0.7628112     0.003393371       0.7926007
-sbs.gemFT.m6.angle =       -1.046356       0.2588486      -0.1187663
-sbs.gemFT.m7.position =      -0.2510401     0.002238799       0.7445862
-sbs.gemFT.m7.angle =       -1.357213       0.4032532     -0.06891023
-sbs.gemFT.m8.position =       0.2619563   -0.0007499247       0.7767765
-sbs.gemFT.m8.angle =      -0.7051154        0.339835     -0.02120029
-sbs.gemFT.m9.position =        0.772186    0.0001901603       0.7266947
-sbs.gemFT.m9.angle =      -0.6260749         1.23612     -0.04166257
-sbs.gemFT.m10.position =      -0.7616801     0.004302916       0.9180964
-sbs.gemFT.m10.angle =       -1.022046     -0.03887218     -0.08659501
-sbs.gemFT.m11.position =      -0.2494009     0.002830733       0.8710197
-sbs.gemFT.m11.angle =       -1.226832      0.06433925      0.06220228
-sbs.gemFT.m12.position =       0.2616985     0.001268103       0.9066948
-sbs.gemFT.m12.angle =       -0.751813       0.1560721      -0.0238541
-sbs.gemFT.m13.position =       0.7730414    0.0006709589       0.8541257
-sbs.gemFT.m13.angle =      -0.3963464        1.577535     -0.02565919
+sbs.gemFT.m1.position =    -0.002259472    0.0008373434      0.07213433
+sbs.gemFT.m1.angle =       -1.087897        1.040758     -0.06193919
+sbs.gemFT.m2.position =    0.0003292298    -0.000338765       0.2099319
+sbs.gemFT.m2.angle =       -1.058379        1.108541       0.2173393
+sbs.gemFT.m3.position =     0.003614392     0.006638138       0.3489471
+sbs.gemFT.m3.angle =       -1.075343        1.212314      -0.1320195
+sbs.gemFT.m4.position =     0.005641447   -0.0008148783       0.4954855
+sbs.gemFT.m4.angle =      -0.9496195         1.47835       0.2154413
+sbs.gemFT.m5.position =     0.007507569     0.002351737       0.6321395
+sbs.gemFT.m5.angle =      -0.8818648        1.563196     -0.07610464
+sbs.gemFT.m6.position =      -0.7619157     0.003427874       0.7998824
+sbs.gemFT.m6.angle =      -0.8963751        1.447084      -0.1092929
+sbs.gemFT.m7.position =      -0.2507754     0.002352944       0.7424814
+sbs.gemFT.m7.angle =       -1.141504        1.462771     -0.06088154
+sbs.gemFT.m8.position =       0.2614162   -0.0005371953       0.7696726
+sbs.gemFT.m8.angle =      -0.8835115        1.440646     -0.01476966
+sbs.gemFT.m9.position =        0.771213    0.0003784747       0.7080575
+sbs.gemFT.m9.angle =      -0.4063061        2.508663     -0.06213124
+sbs.gemFT.m10.position =      -0.7605798     0.004370959       0.9256061
+sbs.gemFT.m10.angle =      -0.8925837        1.386314     -0.07903467
+sbs.gemFT.m11.position =      -0.2487789     0.002962527       0.8661082
+sbs.gemFT.m11.angle =       -1.086948        1.172176      0.06063274
+sbs.gemFT.m12.position =       0.2610646     0.001503211       0.8980379
+sbs.gemFT.m12.angle =       -1.083357        1.438599     -0.01684067
+sbs.gemFT.m13.position =       0.7718534     0.000907829       0.8325154
+sbs.gemFT.m13.angle =      -0.2622014        2.395276     -0.05038973
 
 
 ---------[ 2025-05-05 16:30:00 ] # Start of GEP3.
@@ -1478,35 +1508,66 @@ sbs.gemFT.cmfile = gemped/db_cmr_sbs_gemFT_run3523.dat
 #sbs.gemFT.m13.position =       0.7731784    0.0006394542       0.8538343
 #sbs.gemFT.m13.angle =       -0.221331          1.7311     -0.04389869
 
-# AJRP 5/21/2025 - new C foil internal alignment (not much difference with previous):
+# # AJRP 5/21/2025 - new C foil internal alignment (not much difference with previous):
+# sbs.gemFT.m0.position =    -0.002236895   -0.0003641498     0.005023093
+# sbs.gemFT.m0.angle =       -1.258189       0.7996755    0.0005412109
+# sbs.gemFT.m1.position =    -0.002169534    0.0008273605      0.07784921
+# sbs.gemFT.m1.angle =       -1.351836       0.8040262      -0.0511277
+# sbs.gemFT.m2.position =    0.0005508111    -0.000405414       0.2147153
+# sbs.gemFT.m2.angle =       -1.303328       0.7305499       0.2290222
+# sbs.gemFT.m3.position =     0.003831191     0.006552392       0.3533852
+# sbs.gemFT.m3.angle =        -1.10794       0.6831443      -0.1249339
+# sbs.gemFT.m4.position =     0.005857544   -0.0009332395       0.4998596
+# sbs.gemFT.m4.angle =       -1.010452       0.7857165       0.2201688
+# sbs.gemFT.m5.position =     0.007756903     0.002214294       0.6364908
+# sbs.gemFT.m5.angle =      -0.8699978       0.7595489     -0.07704093
+# sbs.gemFT.m6.position =      -0.7626472     0.003355265       0.7949689
+# sbs.gemFT.m6.angle =      -0.9886132      -0.0726405      -0.1141179
+# sbs.gemFT.m7.position =      -0.2509537     0.002224828       0.7477752
+# sbs.gemFT.m7.angle =       -1.307987       0.2477452     -0.05869785
+# sbs.gemFT.m8.position =       0.2619625    -0.000732541       0.7792866
+# sbs.gemFT.m8.angle =       -0.363151       0.8887597     -0.01799294
+# sbs.gemFT.m9.position =        0.772379    0.0001934413       0.7283976
+# sbs.gemFT.m9.angle =      -0.5906835        1.177212     -0.04963096
+# sbs.gemFT.m10.position =      -0.7615791     0.004310186        0.920294
+# sbs.gemFT.m10.angle =      -0.9029836      -0.3368155     -0.07853411
+# sbs.gemFT.m11.position =      -0.2493087     0.002841845       0.8742801
+# sbs.gemFT.m11.angle =       -1.149593      -0.1725326      0.07218308
+# sbs.gemFT.m12.position =       0.2616862     0.001305409       0.9084051
+# sbs.gemFT.m12.angle =     -0.07055208       0.8699576     -0.02315095
+# sbs.gemFT.m13.position =       0.7732667     0.000599356       0.8534869
+# sbs.gemFT.m13.angle =      -0.1796167        1.814057      -0.0587588
+
+#NAVV 9/22/26 - Results after improving internal and front-to-back alignments using LH2 data
+#Modules 0 and 11 were fixed in the final iteration 
 sbs.gemFT.m0.position =    -0.002236895   -0.0003641498     0.005023093
 sbs.gemFT.m0.angle =       -1.258189       0.7996755    0.0005412109
-sbs.gemFT.m1.position =    -0.002169534    0.0008273605      0.07784921
-sbs.gemFT.m1.angle =       -1.351836       0.8040262      -0.0511277
-sbs.gemFT.m2.position =    0.0005508111    -0.000405414       0.2147153
-sbs.gemFT.m2.angle =       -1.303328       0.7305499       0.2290222
-sbs.gemFT.m3.position =     0.003831191     0.006552392       0.3533852
-sbs.gemFT.m3.angle =        -1.10794       0.6831443      -0.1249339
-sbs.gemFT.m4.position =     0.005857544   -0.0009332395       0.4998596
-sbs.gemFT.m4.angle =       -1.010452       0.7857165       0.2201688
-sbs.gemFT.m5.position =     0.007756903     0.002214294       0.6364908
-sbs.gemFT.m5.angle =      -0.8699978       0.7595489     -0.07704093
-sbs.gemFT.m6.position =      -0.7626472     0.003355265       0.7949689
-sbs.gemFT.m6.angle =      -0.9886132      -0.0726405      -0.1141179
-sbs.gemFT.m7.position =      -0.2509537     0.002224828       0.7477752
-sbs.gemFT.m7.angle =       -1.307987       0.2477452     -0.05869785
-sbs.gemFT.m8.position =       0.2619625    -0.000732541       0.7792866
-sbs.gemFT.m8.angle =       -0.363151       0.8887597     -0.01799294
-sbs.gemFT.m9.position =        0.772379    0.0001934413       0.7283976
-sbs.gemFT.m9.angle =      -0.5906835        1.177212     -0.04963096
-sbs.gemFT.m10.position =      -0.7615791     0.004310186        0.920294
-sbs.gemFT.m10.angle =      -0.9029836      -0.3368155     -0.07853411
-sbs.gemFT.m11.position =      -0.2493087     0.002841845       0.8742801
-sbs.gemFT.m11.angle =       -1.149593      -0.1725326      0.07218308
-sbs.gemFT.m12.position =       0.2616862     0.001305409       0.9084051
-sbs.gemFT.m12.angle =     -0.07055208       0.8699576     -0.02315095
-sbs.gemFT.m13.position =       0.7732667     0.000599356       0.8534869
-sbs.gemFT.m13.angle =      -0.1796167        1.814057      -0.0587588
+sbs.gemFT.m1.position =    -0.002312811    0.0008035131       0.0766928
+sbs.gemFT.m1.angle =       -1.026565        0.830174      -0.0498342
+sbs.gemFT.m2.position =    0.0001861867   -0.0004383173       0.2159745
+sbs.gemFT.m2.angle =      -0.9050539       0.6848294       0.2297963
+sbs.gemFT.m3.position =     0.003366788     0.006524413       0.3565179
+sbs.gemFT.m3.angle =      -0.8337954       0.6165563       -0.122382
+sbs.gemFT.m4.position =     0.005227567   -0.0009422147       0.5043733
+sbs.gemFT.m4.angle =      -0.6496713       0.7299756       0.2264738
+sbs.gemFT.m5.position =     0.007019584     0.002178753       0.6425546
+sbs.gemFT.m5.angle =       -0.509667        0.668755      -0.0685445
+sbs.gemFT.m6.position =      -0.7626848     0.003175812       0.7977505
+sbs.gemFT.m6.angle =      -0.4496655       0.3107975      -0.1085964
+sbs.gemFT.m7.position =      -0.2516291     0.002091442       0.7515619
+sbs.gemFT.m7.angle =      -0.7855476       0.5648415     -0.04754576
+sbs.gemFT.m8.position =       0.2609422   -0.0007459039       0.7871867
+sbs.gemFT.m8.angle =      -0.4313468        0.350618    -0.005189584
+sbs.gemFT.m9.position =       0.7706534    0.0002353697       0.7261376
+sbs.gemFT.m9.angle =        1.048237        3.167511     -0.05925801
+sbs.gemFT.m10.position =       -0.761814     0.004027877       0.9246911
+sbs.gemFT.m10.angle =      -0.3593783      0.01518327      -0.0789242
+sbs.gemFT.m11.position =      -0.2501582     0.002672635       0.8789952
+sbs.gemFT.m11.angle =      -0.5761503       0.1727349      0.08781254
+sbs.gemFT.m12.position =       0.2605297     0.001279348       0.9173505
+sbs.gemFT.m12.angle =      -0.5021772       0.1661281    -0.006245362
+sbs.gemFT.m13.position =        0.771501    0.0007293854       0.8580268
+sbs.gemFT.m13.angle =        1.593745        1.999554     -0.04623353
 
 
 sbs.gemFT.filterflag1D = -1
@@ -1600,34 +1661,65 @@ sbs.gemFT.dump_geometry_info = 1
 sbs.gemFT.trackchi2cut = 30.0
 
 # ADR 6/4/2025 - new C foil internal alignment after the Hall work in 5/23/2025. FT was not moved and results are not much different to the previous alignment:
-sbs.gemFT.m0.position =      -0.0022369     -0.00036415      0.00502309
-sbs.gemFT.m0.angle =       -1.257946       0.7992647    0.0005411054
-sbs.gemFT.m1.position =    -0.002265194    0.0007917635      0.07786703
-sbs.gemFT.m1.angle =       -1.426366       0.8320934     -0.04433291
-sbs.gemFT.m2.position =    0.0005446825   -0.0003887713        0.215573
-sbs.gemFT.m2.angle =       -1.390684       0.7070758       0.2329765
-sbs.gemFT.m3.position =     0.003801107     0.006557074       0.3545363
-sbs.gemFT.m3.angle =       -1.199645        0.657682      -0.1225277
-sbs.gemFT.m4.position =     0.005818726   -0.0009219661       0.5010956
-sbs.gemFT.m4.angle =       -1.069212       0.7700268       0.2237405
-sbs.gemFT.m5.position =     0.007708947     0.002225421       0.6379182
-sbs.gemFT.m5.angle =      -0.8773407       0.7423647     -0.07278594
-sbs.gemFT.m6.position =       -0.762689     0.003306672       0.7965693
-sbs.gemFT.m6.angle =      -0.9476139     -0.05164289      -0.1020087
-sbs.gemFT.m7.position =      -0.2509634      0.00220726       0.7489353
-sbs.gemFT.m7.angle =        -1.28469       0.1881764     -0.05187122
-sbs.gemFT.m8.position =       0.2618947   -0.0007084945       0.7804896
-sbs.gemFT.m8.angle =      -0.3826047       0.8674216     -0.01469593
-sbs.gemFT.m9.position =       0.7723072    0.0002291313       0.7300039
-sbs.gemFT.m9.angle =      -0.5272954        1.156329     -0.05911903
-sbs.gemFT.m10.position =      -0.7615725     0.004237384       0.9216153
-sbs.gemFT.m10.angle =      -0.8776847      -0.4339881     -0.07133304
-sbs.gemFT.m11.position =      -0.2492617     0.002797322       0.8750507
-sbs.gemFT.m11.angle =       -1.065186      -0.1956649      0.08009959
-sbs.gemFT.m12.position =       0.2616163     0.001318415       0.9096996
-sbs.gemFT.m12.angle =      -0.1481864       0.8391139     -0.02066269
-sbs.gemFT.m13.position =       0.7732439    0.0006903553       0.8551133
-sbs.gemFT.m13.angle =        -0.21104        1.855113     -0.05117343
+# sbs.gemFT.m0.position =      -0.0022369     -0.00036415      0.00502309
+# sbs.gemFT.m0.angle =       -1.257946       0.7992647    0.0005411054
+# sbs.gemFT.m1.position =    -0.002265194    0.0007917635      0.07786703
+# sbs.gemFT.m1.angle =       -1.426366       0.8320934     -0.04433291
+# sbs.gemFT.m2.position =    0.0005446825   -0.0003887713        0.215573
+# sbs.gemFT.m2.angle =       -1.390684       0.7070758       0.2329765
+# sbs.gemFT.m3.position =     0.003801107     0.006557074       0.3545363
+# sbs.gemFT.m3.angle =       -1.199645        0.657682      -0.1225277
+# sbs.gemFT.m4.position =     0.005818726   -0.0009219661       0.5010956
+# sbs.gemFT.m4.angle =       -1.069212       0.7700268       0.2237405
+# sbs.gemFT.m5.position =     0.007708947     0.002225421       0.6379182
+# sbs.gemFT.m5.angle =      -0.8773407       0.7423647     -0.07278594
+# sbs.gemFT.m6.position =       -0.762689     0.003306672       0.7965693
+# sbs.gemFT.m6.angle =      -0.9476139     -0.05164289      -0.1020087
+# sbs.gemFT.m7.position =      -0.2509634      0.00220726       0.7489353
+# sbs.gemFT.m7.angle =        -1.28469       0.1881764     -0.05187122
+# sbs.gemFT.m8.position =       0.2618947   -0.0007084945       0.7804896
+# sbs.gemFT.m8.angle =      -0.3826047       0.8674216     -0.01469593
+# sbs.gemFT.m9.position =       0.7723072    0.0002291313       0.7300039
+# sbs.gemFT.m9.angle =      -0.5272954        1.156329     -0.05911903
+# sbs.gemFT.m10.position =      -0.7615725     0.004237384       0.9216153
+# sbs.gemFT.m10.angle =      -0.8776847      -0.4339881     -0.07133304
+# sbs.gemFT.m11.position =      -0.2492617     0.002797322       0.8750507
+# sbs.gemFT.m11.angle =       -1.065186      -0.1956649      0.08009959
+# sbs.gemFT.m12.position =       0.2616163     0.001318415       0.9096996
+# sbs.gemFT.m12.angle =      -0.1481864       0.8391139     -0.02066269
+# sbs.gemFT.m13.position =       0.7732439    0.0006903553       0.8551133
+# sbs.gemFT.m13.angle =        -0.21104        1.855113     -0.05117343
+
+#NAVV 9/22/26 - Results after improving internal and front-to-back alignments using Field-On Multifoil data
+#Modules 0 and 11 were fixed in the final iteration 
+sbs.gemFT.m0.position =    -0.002236895   -0.0003641498     0.005023093
+sbs.gemFT.m0.angle =       -1.258189       0.7996755    0.0005412108
+sbs.gemFT.m1.position =    -0.002152164    0.0008430801      0.07527431
+sbs.gemFT.m1.angle =       -1.103425       0.8490982     -0.05072091
+sbs.gemFT.m2.position =    0.0004193737   -0.0003972315       0.2127724
+sbs.gemFT.m2.angle =      -0.9468778       0.8202636       0.2258865
+sbs.gemFT.m3.position =     0.003489682     0.006509067       0.3544586
+sbs.gemFT.m3.angle =       -0.872432       0.6416999      -0.1194654
+sbs.gemFT.m4.position =     0.005352347   -0.0009648039       0.5026057
+sbs.gemFT.m4.angle =      -0.7196974       0.6630703       0.2334873
+sbs.gemFT.m5.position =     0.007082912     0.002155632       0.6416877
+sbs.gemFT.m5.angle =      -0.5113997       0.4967968     -0.05659363
+sbs.gemFT.m6.position =      -0.7630676     0.002947184        0.796006
+sbs.gemFT.m6.angle =      -0.5301729       0.2283721      -0.1029639
+sbs.gemFT.m7.position =      -0.2515161     0.001986559       0.7490421
+sbs.gemFT.m7.angle =      -0.6382524       0.4630368     -0.03550577
+sbs.gemFT.m8.position =       0.2610428   -0.0007424567       0.7852948
+sbs.gemFT.m8.angle =      -0.2293116       0.4414804        0.008546
+sbs.gemFT.m9.position =       0.7711723    0.0003425486       0.7353773
+sbs.gemFT.m9.angle =      -0.1870915       0.7483137      -0.0371406
+sbs.gemFT.m10.position =      -0.7620791     0.003763018       0.9222344
+sbs.gemFT.m10.angle =      -0.4181043      -0.0907841     -0.06139243
+sbs.gemFT.m11.position =      -0.2499013     0.002507561       0.8751217
+sbs.gemFT.m11.angle =      -0.4404326       0.1912368       0.1020832
+sbs.gemFT.m12.position =       0.2605992      0.00127218        0.915915
+sbs.gemFT.m12.angle =      -0.0628412       0.4138852      0.01023819
+sbs.gemFT.m13.position =       0.7718401    0.0008123735       0.8634469
+sbs.gemFT.m13.angle =     0.003270403       0.8539595     -0.01892496
 
 
 ---------[ 2025-05-23 20:00:00 ] # Begin production running on LH2 with field ON.

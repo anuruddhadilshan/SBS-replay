@@ -21,7 +21,7 @@ sbs.gemFT.yptar_max = 0.08
 sbs.gemFT.ytar_min = -0.12
 sbs.gemFT.ytar_max = 0.07
 
-sbs.gemFT.pmin = 5.0
+sbs.gemFT.pmin = 1.5
 sbs.gemFT.pmax = 8.5
 
 sbs.gemFT.useelasticconstraint = 0

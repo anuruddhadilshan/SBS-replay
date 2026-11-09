@@ -224,34 +224,38 @@ bb.magdist = 1.55
 ###############################################################################
 --------[ 2024-10-01 00:00:00 ] 
 
-ebeam = 6.476
+ebeam = 6.465 # applies canonical 1.0027 scale factor from HALLA:p to get "true" beam energy
 experiment = gep
 
-sbs.theta = -25.7
+sbs.theta = -25.756
 sbs.pcentral = 3.88
-sbs.magdist = 1.6
-sbs.hcaldist = 10.0
+#sbs.magdist = 1.6
+sbs.magdist = 1.59638 # meters, corrects for survey offset(s)
+sbs.hcaldist = 10.0039 # meters, accounts for survey offset(s) 
 
 earm.theta = 29.46
 earm.pcentral = 3.42
 # changing ECAL "effective z" to remove correlation between dx and x
-earm.ecaldist = 8.14
+#earm.ecaldist = 8.14
 #earm.ecaldist = 8.0
+# survey result A2143 (deal with "effective z" later w/position variables):
+earm.ecaldist = 7.9923 # meters, accounts for survey offsets
 
 --------[ 2025-05-04 11:59:00 ] # GEP3
 
 # do we actually need this "experiment = " parameter?
 experiment = gep 
-ebeam = 10.688
-sbs.theta = -18.6
+ebeam = 10.6897 # applies nominal scale factor from EPICS HALLA:p to get "true" beam energy
+sbs.theta = -18.6127
 sbs.pcentral = 6.8
-sbs.magdist = 1.6
-sbs.hcaldist = 10.0
+sbs.magdist = 1.6184
+sbs.hcaldist = 9.9872
 
 earm.theta = 27.0
 earm.pcentral = 4.77
 # nominal ECAL distance (will adjust for appropriate "effective distance") 
 #earm.ecaldist = 6.0
-# "effective z" about 13 cm deep:
-earm.ecaldist = 6.133
+
+# actual ECAL dist according to survey (will implement "effective z" via earm.ecal.position variables):
+earm.ecaldist = 6.00221
 
