@@ -359,6 +359,30 @@ void AlignZeroField( const char *configfilename ){
   TFile fcut(outCutFile,"RECREATE");
   TString hname_cut;
 
+  Double_t inch = 2.54/100.0;
+
+  Double_t sieve_height = 27.50*inch;
+  
+  Double_t sieve_thick = 1.5*inch; //1.5 inches converted to meters
+
+  // xoff/(thick/2) = tan(theta) --> xoff = thick/2 * tan(theta)
+  
+  Double_t xs_cent_midpoint[13] =
+    { -sieve_height/2.0+1.942*inch/cos(18.0*PI/180.0) - sieve_thick/2.0*tan(18.0*PI/180.0),
+      -sieve_height/2.0+(1.942+1.938)*inch/cos(18.0*PI/180.0) - sieve_thick/2.0*tan(18.0*PI/180.0),
+      -sieve_height/2.0+5.879*inch/cos(9.0*PI/180.0) - sieve_thick/2.0*tan(9.0*PI/180.0),
+      -sieve_height/2.0+(5.879+1.938)*inch/cos(9.0*PI/180.0) - sieve_thick/2.0*tan(9.0*PI/180.0),
+      -sieve_height/2.0+(5.879+2.0*1.938)*inch/cos(9.0*PI/180.0) - sieve_thick/2.0*tan(9.0*PI/180.0),
+      -1.938*inch,
+      0.0,
+      1.938*inch,
+      sieve_height/2.0-(5.879+2.0*1.938)*inch/cos(9.0*PI/180.0) + sieve_thick/2.0*tan(9.0*PI/180.0),
+      sieve_height/2.0-(5.879+1.938)*inch/cos(9.0*PI/180.0) + sieve_thick/2.0*tan(9.0*PI/180.0),
+      sieve_height/2.0-5.879*inch/cos(9.0*PI/180.0) + sieve_thick/2.0*tan(9.0*PI/180.0),
+      sieve_height/2.0-(1.942+1.938)*inch/cos(18.0*PI/180.0) + sieve_thick/2.0*tan(18.0*PI/180.0),
+      sieve_height/2.0-1.942*inch/cos(18.0*PI/180.0) + sieve_thick/2.0*tan(18.0*PI/180.0)
+    };
+  
   //Here are the desired sieve positions:
   vector <Double_t> xs_cent{-(0.3+0.0492)+0.0493/cos(18.*PI/180.),
       -(0.3+0.0492)+(0.0493+0.0492)/cos(18.*PI/180.),
@@ -376,12 +400,15 @@ void AlignZeroField( const char *configfilename ){
    
   //Add in any XSIEVE offset defined by the user:
   for( int ix=0; ix<nxsieve; ix++ ){
+    xs_cent[ix] = xs_cent_midpoint[ix]; //comment this line to use the "old" positions
     xs_cent[ix] += XOFFSIEVE;
   }
 
+  Double_t yspace = 1.5*inch;
+  
   vector <Double_t> ys_cent;
   for (Int_t nys=0;nys<nysieve;nys++) {
-    Double_t pos=nys*0.0381-0.0381*3;//old sieve
+    Double_t pos=yspace*(nys-3);//old sieve
     ys_cent.push_back(pos + YOFFSIEVE);
   }
 
@@ -518,8 +545,8 @@ void AlignZeroField( const char *configfilename ){
   vector<vector<double> > xsigma_hole(nxsieve);
   vector<vector<double> > ysigma_hole(nxsieve);
 
-  double yspace = 0.038;
-  double xspace = 0.049; 
+  yspace = 0.0381;
+  double xspace = 0.0492; 
 
   TCanvas *cfit = new TCanvas("cfit","cfit",1600,700);
 

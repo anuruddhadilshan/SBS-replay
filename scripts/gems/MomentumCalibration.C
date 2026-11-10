@@ -69,7 +69,7 @@ void MomentumCalibration( const char *configfilename, const char *outputfilename
   double Ltgt = 15.0; //cm
   double rho_tgt = 0.0723; //g/cc
 
-  double celldiameter = 1.6*2.65; //cm, right now this is a guess
+  double celldiameter = 1.6*2.54; //cm, right now this is a guess
   
   double Ztgt = 1.0;
   double Atgt = 1.0;
@@ -99,7 +99,8 @@ void MomentumCalibration( const char *configfilename, const char *outputfilename
 
   //To calculate a proper dx, dy for HCAL, we need
   double hcalheight = 0.365; //m (we are guessing that this is the height of the center of HCAL above beam height:
-
+  hcalheight = 0.0;
+  
   //The following are the positions of the "first" row and column from HCAL database (top right block as viewed from upstream)
   double xoff_hcal = 0.92835;
   double yoff_hcal = 0.47305;
@@ -356,6 +357,9 @@ void MomentumCalibration( const char *configfilename, const char *outputfilename
   C->SetBranchStatus("sbs.hcal.x",1);
   C->SetBranchStatus("sbs.hcal.y",1);
   C->SetBranchStatus("sbs.hcal.e",1);
+  C->SetBranchStatus("sbs.hcal.atimeblk",1);
+  C->SetBranchStatus("e.kine.*",1);
+  C->SetBranchStatus("sbs.tr.*",1);
 
   //BigBite track variables:
   C->SetBranchStatus("bb.tr.n",1);
@@ -376,14 +380,18 @@ void MomentumCalibration( const char *configfilename, const char *outputfilename
   C->SetBranchStatus("bb.tr.tg_y",1);
   C->SetBranchStatus("bb.tr.tg_th",1);
   C->SetBranchStatus("bb.tr.tg_ph",1);
+  C->SetBranchStatus("bb.tr.*",1);
   
   //Shower and preshower variables:
+  C->SetBranchStatus("bb.etot_over_p",1);
   C->SetBranchStatus("bb.ps.e",1);
   C->SetBranchStatus("bb.ps.x",1);
   C->SetBranchStatus("bb.ps.y",1);
   C->SetBranchStatus("bb.sh.e",1);
   C->SetBranchStatus("bb.sh.x",1);
   C->SetBranchStatus("bb.sh.y",1);
+  C->SetBranchStatus("bb.sh.atimeblk",1);
+  C->SetBranchStatus("bb.ps.atimeblk",1);
 
   C->SetBranchAddress("bb.tr.n",&ntrack);
   C->SetBranchAddress("bb.tr.p",p);
@@ -549,21 +557,21 @@ void MomentumCalibration( const char *configfilename, const char *outputfilename
       TVector3 pNhat( sin(ptheta_expect)*cos(pphi_expect), sin(ptheta_expect)*sin(pphi_expect), cos(ptheta_expect) );
 
       TVector3 HCAL_zaxis(-sin(sbstheta),0,cos(sbstheta));
-      TVector3 HCAL_xaxis(0,1,0);
+      TVector3 HCAL_xaxis(0,-1,0);
       TVector3 HCAL_yaxis = HCAL_zaxis.Cross(HCAL_xaxis).Unit();
       
-      TVector3 HCAL_origin = hcaldist * HCAL_zaxis + hcalheight * HCAL_xaxis;
+      TVector3 HCAL_origin = hcaldist * HCAL_zaxis;
       
-      TVector3 TopRightBlockPos_DB(xoff_hcal,yoff_hcal,0);
+      // TVector3 TopRightBlockPos_DB(xoff_hcal,yoff_hcal,0);
       
-      TVector3 TopRightBlockPos_Hall( hcalheight + (nrows_hcal/2-0.5)*blockspace_hcal,
-				      (ncols_hcal/2-0.5)*blockspace_hcal, 0 );
+      // TVector3 TopRightBlockPos_Hall( hcalheight + (nrows_hcal/2-0.5)*blockspace_hcal,
+      // 				      (ncols_hcal/2-0.5)*blockspace_hcal, 0 );
       
       
       //Assume that HCAL origin is at the vertical and horizontal midpoint of HCAL
       
-      xHCAL += TopRightBlockPos_Hall.X() - TopRightBlockPos_DB.X();
-      yHCAL += TopRightBlockPos_Hall.Y() - TopRightBlockPos_DB.Y();
+      //      xHCAL += TopRightBlockPos_Hall.X() - TopRightBlockPos_DB.X();
+      //yHCAL += TopRightBlockPos_Hall.Y() - TopRightBlockPos_DB.Y();
 
       double sintersect = (HCAL_origin - vertex ).Dot( HCAL_zaxis ) / (pNhat.Dot(HCAL_zaxis));
       //Straight-line projection to the surface of HCAL:
@@ -601,6 +609,8 @@ void MomentumCalibration( const char *configfilename, const char *outputfilename
 	
 	
 	double pincident = pelastic - MeanEloss_outgoing;
+
+	pincident = pelastic;
 	
 	//Now we need to calculate the "true" trajectory bend angle for the electron from the reconstructed angles:
 	TVector3 enhat_tgt( thtgt[0], phtgt[0], 1.0 );

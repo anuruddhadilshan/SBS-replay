@@ -1,4 +1,5 @@
 #tree variables: 
+block g.*
 block sbs.uvagem.track.*
 block sbs.uvagem.hit.*
 variable sbs.uvagem.nlayershit

@@ -68,7 +68,7 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     double W2min = 0.5, W2max = 1.3;
 
     //   double dEdx_LH2 = 0.005854; //MeV*cm2 / g @ 4.287 GeV;
-    double dEdx_LH2 = 0.0; //default to no eloss corrections
+    double dEdx_LH2 = 0.00574; //default to no eloss corrections
     double TargDiam_LH2_cm = 1.6*2.54; //This is from Meekins' GMN target report
     double Ltgt_LH2_cm = 15.0; //meters
     double rho_tgt = 0.0723; // for the time being we'll neglect the end window and side wall elosses
@@ -831,7 +831,10 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
     Tout->Branch( "pySBSfit", &T_pySBS_fit );
     Tout->Branch( "pzSBSfit", &T_pzSBS_fit );
 
-    
+    double T_protondeflection, T_protondeflection_4vect;
+    //double T_protondeflection_exact, T_protondeflection_exact_4vect;
+    Tout->Branch( "protondeflection", &T_protondeflection );
+    Tout->Branch( "protondeflection_4vect", &T_protondeflection_4vect );
     
     TString opticsfname = outfilename;
     opticsfname.ReplaceAll( ".root", ".dat" );
@@ -951,6 +954,11 @@ void SBS_optics_Heep( const char *configfilename, const char *outfilename="optic
 	TVector3 HCAL_int4vect = vertexBB + q4vect.Vect().Unit() * sint_4vect;
 	double xHCAL_expect_4vect = (HCAL_int4vect - HCAL_center).Dot(SBS_xaxis);
 	double yHCAL_expect_4vect = (HCAL_int4vect - HCAL_center).Dot(SBS_yaxis);
+
+	// p*thetabend = 0.3 * BdL 
+	T_protondeflection = tan ( ( 0.3 * sbsfield * sbsmaxfield * Dgap )/pp_etheta )*( hcaldist - (sbsdist + Dgap/2.0));
+	T_protondeflection_4vect = tan( ( 0.3 * sbsfield * sbsmaxfield * Dgap )/ (q4vect.Vect().Mag()) ) * ( hcaldist - (sbsdist + Dgap/2.0));
+	
 	
 	bool passedxy = sqrt(pow( (xHCAL-xHCAL_expect-dx0)/dxsigma, 2 ) + pow( (yHCAL-yHCAL_expect-dy0)/dysigma, 2 ) ) <= 3.5;
 	bool passedtime = abs( THCAL-TSH-dt0 ) <= 3.5*dtsigma;

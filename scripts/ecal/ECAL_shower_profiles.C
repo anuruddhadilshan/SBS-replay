@@ -66,7 +66,7 @@ void ECAL_shower_profiles( const char *configfilename, const char *outfilename="
   double xmin = -1.75, xmax = 1.75;
   double ymin = -0.75, ymax = 0.75;
 
-  double Lx = 0.043, Ly = 0.043;
+  double Lx = 0.04345, Ly = 0.04362; //actual average block spacing = 43.4 mm!
   
   TString currentline;
 
@@ -157,6 +157,7 @@ void ECAL_shower_profiles( const char *configfilename, const char *outfilename="
 
   C->SetBranchStatus("*",0);
   C->SetBranchStatus("heep.*",1);
+  C->SetBranchStatus("MC.*",1); //For MC analysis, enable MC truth variables
   C->SetBranchStatus("earm.ecal.*",1);
   //  C->SetBranchStatus("
   

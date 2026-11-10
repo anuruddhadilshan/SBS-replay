@@ -1,3 +1,6 @@
+---------[ 2020-01-01 00:00:00 ] # initial timestamp
+ TSROC 21 
+
 # Date/Time = Fri Jan 1 11:00:00 2021
 ## Crate map for decoding 5-layer UVA EEL cosmic-ray data from January 12, 2021 (from gem_map_uva_eel_3crates_layer12345.cfg)
 # For this run, the MPD data is in CODA bank 10:

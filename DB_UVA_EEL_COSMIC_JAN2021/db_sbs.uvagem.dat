@@ -17,7 +17,7 @@ sbs.uvagem.modules =
 sbs.uvagem.apvmap = 1
 
 sbs.uvagem.pedestalmode = 0
-sbs.uvagem.commonmode_flag = 1
+sbs.uvagem.commonmode_flag = 0
 sbs.uvagem.commonmode_nstriplo = 20
 sbs.uvagem.commonmode_nstriphi = 20
 sbs.uvagem.commonmode_niter = 3
@@ -246,37 +246,37 @@ sbs.uvagem.threshold_stripsum = 200.0
 sbs.uvagem.threshold_clustersum = 500.0
 
 #
-sbs.uvagem.ADCasym_cut = 0.3
+sbs.uvagem.ADCasym_cut = 0.75
 # time difference cut in nanoseconds
 sbs.uvagem.deltat_cut = 30.0
-sbs.uvagem.corrcoeff_cut = 0.5
+sbs.uvagem.corrcoeff_cut = 0.4
 sbs.uvagem.filterflag1D = 0
 sbs.uvagem.filterflag2D = 0
 
 # peak prominence cuts for splitting clusters when overlapping peaks are detected:
-sbs.uvagem.peakprominence_minsigma = 5.0
-sbs.uvagem.peakprominence_minfraction = 0.2
+sbs.uvagem.peakprominence_minsigma = 3.5
+sbs.uvagem.peakprominence_minfraction = 0.15
 
 # cluster size restrictions for total charge calculation and hit position reconstruction:
 # for cluster charge calculation: +/- 4 strips from peak = maximum cluster size 9 strips
 sbs.uvagem.maxnu_charge = 4
 sbs.uvagem.maxnv_charge = 4
 # for cluster position reconstruction: +/- 2 strips from peak = maximum cluster size 5 strips
-sbs.uvagem.maxnu_pos = 2
-sbs.uvagem.maxnv_pos = 2
+sbs.uvagem.maxnu_pos = 3
+sbs.uvagem.maxnv_pos = 3
 
 sbs.uvagem.sigmahitshape = 0.0004 
 sbs.uvagem.sigmahitpos = 0.00015 # 0.15 mm or 150 um
-sbs.uvagem.trackchi2cut = 200.0
+sbs.uvagem.trackchi2cut = 50.0
 sbs.uvagem.onlinezerosuppression = 0
-sbs.uvagem.zerosuppress_nsigma = 5.0
+sbs.uvagem.zerosuppress_nsigma = 3.5
 sbs.uvagem.minhitsontrack = 3
 sbs.uvagem.maxhitcombos = 20000
 sbs.uvagem.maxhitcombos_inner = 20000
-sbs.uvagem.maxhitcombos_total = 1000000000
+sbs.uvagem.maxhitcombos_total = 1.e14
 sbs.uvagem.tryfasttrack = 1
-sbs.uvagem.gridbinwidthx = 0.01
-sbs.uvagem.gridbinwidthy = 0.01
+sbs.uvagem.gridbinwidthx = 0.015
+sbs.uvagem.gridbinwidthy = 0.015
 sbs.uvagem.gridedgetolerancex = 0.003
 sbs.uvagem.gridedgetolerancey = 0.003
 sbs.uvagem.useconstraint = 0
@@ -336,70 +336,78 @@ sbs.uvagem.m17.vpitch = 0.0004
 sbs.uvagem.m18.vpitch = 0.0004
 sbs.uvagem.m19.vpitch = 0.0004
 
-# u and v gain: vector with dimension equal to the number of APV cards: to equalize gain, DIVIDE ADCs by these relative gain coefficients.
-# Note one of the "U" APVs always has its gain fixed to 1 by definition and all the other APV gains are determined relative to that one:
-sbs.uvagem.m0.vgain = 0.816936  0.795968  0.823609  0.763147  0.832519  0.892504  0.86463  0.843393  0.831767  0.872576  
-sbs.uvagem.m0.ugain = 0.945801  0.965016  0.998945  0.966427  1.03651  1.01875  0.9907  1  0.941739  0.98209  0.937806  0.994046  
-sbs.uvagem.m1.vgain = 0.825204  0.825447  0.883509  0.71526  0.688798  0.854074  0.814825  0.825861  0.808239  0.813523  
-sbs.uvagem.m1.ugain = 0.706319  0.79947  0.936198  0.951751  0.971463  0.910956  1  1  0.996248  0.949413  1.07636  0.991224  
-sbs.uvagem.m2.vgain = 0.678251  0.636811  0.674631  0.627746  0.666034  0.762119  0.738025  0.754547  0.702076  0.725301  
-sbs.uvagem.m2.ugain = 1.0336  0.900465  0.98274  0.931415  1.0135  0.995154  0.969556  1  0.96827  0.909715  0.902091  0.795539  
-sbs.uvagem.m3.vgain = 0.873252  0.746776  0.821978  0.791269  0.769894  0.710367  0.685411  0.700452  0.682057  0.712635  
-sbs.uvagem.m3.ugain = 0.969004  0.918917  0.951736  0.942715  1  0.969403  0.938643  0.977841  0.945842  0.963956  0.838679  0.823144  
-sbs.uvagem.m4.vgain = 0.399477  0.381374  0.388027  0.409924  0.457708  0.568628  0.562311  0.600001  0.545358  0.605218  
-sbs.uvagem.m4.ugain = 0.641813  0.737475  0.778471  0.893821  0.85776  0.892259  0.860178  0.900083  1  0.894298  0.905239  0.906056  
-sbs.uvagem.m5.vgain = 0.520393  0.50947  0.449992  0.462458  0.452693  0.57147  0.539567  0.600054  0.624859  0.654392  
-sbs.uvagem.m5.ugain = 0.547647  0.669444  0.765298  0.879321  1.03136  1.00261  1.03881  1  1.01509  1.06847  1.05916  1.03241  
-sbs.uvagem.m6.vgain = 0.429657  0.415903  0.399042  0.40487  0.474121  0.739109  0.661973  0.682189  0.682397  0.730974  
-sbs.uvagem.m6.ugain = 0.986281  1.02253  1.06619  1.0375  1.00519  1  0.974219  1.01489  1.03007  0.990914  0.925712  0.815547  
-sbs.uvagem.m7.vgain = 0.644497  0.56034  0.618616  0.577806  0.689089  0.585916  0.536992  0.545866  0.473485  0.564419  
-sbs.uvagem.m7.ugain = 0.997587  0.980807  1.00771  1.02038  0.955457  0.961167  0.997936  1  0.880131  0.705749  0.578567  0.400264  
-sbs.uvagem.m8.vgain = 0.780183  0.761346  0.750286  0.719476  0.750863  0.85783  0.824978  0.842165  0.821127  0.812559  
-sbs.uvagem.m8.ugain = 0.620984  0.729494  0.864834  0.939426  1.03386  1.00065  1  1.02994  1.04183  1.0558  1.03454  1.03724  
-sbs.uvagem.m9.vgain = 0.769404  0.787672  0.731272  0.806138  0.839759  0.850466  0.810874  0.660692  0.677172  0.648487  
-sbs.uvagem.m9.ugain = 0.825101  0.888328  0.962727  1.07265  0.95581  0.968342  1  1.02577  1.0836  1.01367  1.08118  1.02156  
-sbs.uvagem.m10.vgain = 0.947203  0.77639  0.797698  0.800192  0.806611  0.623647  0.490248  0.476767  0.469702  0.509717  
-sbs.uvagem.m10.ugain = 1.03152  1.078  1.06867  1.02328  0.962882  0.998889  1  1.01293  0.945311  0.437387  0.915234  0.800208  
-sbs.uvagem.m11.vgain = 0.759293  0.668424  0.726019  0.699343  0.752083  0.643234  0.502509  0.506135  0.545492  0.587385  
-sbs.uvagem.m11.ugain = 1.03575  1.02903  1.00723  0.996257  1.0226  1.03209  1  0.985793  1.00772  1.00372  0.897375  0.794816  
-sbs.uvagem.m12.vgain = 0.642707  0.569913  0.507478  0.544116  0.578401  0.742167  0.659092  0.696255  0.722308  0.706746  
-sbs.uvagem.m12.ugain = 0.628842  0.749112  0.892152  0.993653  1.04952  1  0.985386  0.993611  0.996291  1.05767  1.07897  0.994446  
-sbs.uvagem.m13.vgain = 0.463461  0.464464  0.436724  0.492263  0.521699  0.533707  0.528119  0.432593  0.39271  0.436491  
-sbs.uvagem.m13.ugain = 0.447436  0.608256  0.719219  0.832348  0.998238  1  1.03309  0.905001  0.789523  0.93392  0.910106  0.907017  
-sbs.uvagem.m14.vgain = 0.615391  0.539155  0.6255  0.630161  0.611251  0.505829  0.434192  0.472986  0.462649  0.513233  
-sbs.uvagem.m14.ugain = 0.948225  0.972283  1.06561  1.02339  1.04106  1  0.972639  1.02389  0.931074  0.728236  0.659401  0.544126  
-sbs.uvagem.m15.vgain = 0.673519  0.585303  0.599564  0.609991  0.630567  0.47325  0.382459  0.438879  0.419723  0.427717  
-sbs.uvagem.m15.ugain = 1.1931  0.91831  0.949772  1.01999  1.04113  1.06609  1  1.06082  0.971126  0.937208  0.783211  0.616298  
-sbs.uvagem.m16.vgain = 0.572376  0.559716  0.524926  0.494536  0.576545  0.516057  0.401699  0.475384  0.402835  0.445076  
-sbs.uvagem.m16.ugain = 0.599901  0.761547  0.943296  1  1.1643  1.13453  1.17272  1.19499  1.03924  1.06877  1.12629  1.12306  
-sbs.uvagem.m17.vgain = 0.609466  0.611103  0.565325  0.701982  0.718265  0.594948  0.560162  0.52698  0.566556  0.611466  
-sbs.uvagem.m17.ugain = 0.508682  0.632972  0.781171  0.89081  0.964737  0.976657  0.974055  0.983465  1  1.03496  1.03834  1.09355  
-sbs.uvagem.m18.vgain = 0.801484  0.774072  0.837162  0.740183  0.775243  0.508334  0.455128  0.489878  0.505387  0.494171  
-sbs.uvagem.m18.ugain = 0.136293  1.0557  1.05199  1.0344  1  0.980483  0.974567  0.922123  1.00714  0.909039  0.785882  0.612983  
-sbs.uvagem.m19.vgain = 0.626405  0.606266  0.627196  0.590842  0.603806  0.501668  0.536411  0.509981  0.550126  0.570728  
-sbs.uvagem.m19.ugain = 1.00279  1.09937  1.08615  1  1.02314  1.06173  1.03447  1.0635  0.93411  0.978972  0.838197  0.78698
+
+# reset gains to 1 since clearly the formalism has changed; need to recalibrate:
+
+#sbs.uvagem.ugain = 1.0
+#sbs.uvagem.vgain = 1.0
+#sbs.uvagem.modulegain = 1.0
+
+# re-ran gain match: 2nd iteration:
+
+#Module internal relative gains by APV card: 
+sbs.uvagem.m0.vgain = 1.22007  1.25883  1.21467  1.30955  1.20049  1.11858  1.15663  1.18482  1.20325  1.15306  
+sbs.uvagem.m0.ugain = 1.04143  1.03595  1.00471  1.03933  0.968257  0.979415  1.01181  1  1.06328  1.01725  1.06886  1.01154  
+sbs.uvagem.m1.vgain = 1.22011  1.22342  1.13949  1.41429  1.46229  1.17948  1.23458  1.21993  1.24389  1.24412  
+sbs.uvagem.m1.ugain = 1.40732  1.24691  1.06484  1.0476  1.02714  1.09625  1  1  1.00388  1.05339  0.932067  1.01327  
+sbs.uvagem.m2.vgain = 1.47136  1.5725  1.48225  1.59709  1.4989  1.31727  1.36481  1.33254  1.43174  1.38205  
+sbs.uvagem.m2.ugain = 0.969471  1.11109  1.02128  1.07302  0.990402  1.00754  1.03392  1  1.03366  1.09737  1.1044  1.24397  
+sbs.uvagem.m3.vgain = 1.12818  1.31602  1.19175  1.24284  1.27198  1.38214  1.42821  1.404  1.44951  1.37507  
+sbs.uvagem.m3.ugain = 0.998977  1.06659  1.03024  1.038  0.976627  1.0089  1.04041  1  1.03266  1.01088  1.16432  1.18163  
+sbs.uvagem.m4.vgain = 2.48158  2.59498  2.52231  2.4204  2.17832  1.76332  1.78298  1.68239  1.84494  1.66354  
+sbs.uvagem.m4.ugain = 1.52343  1.35599  1.28772  1.11851  1.16458  1.12114  1.16297  1.11169  1  1.12167  1.11574  1.11779  
+sbs.uvagem.m5.vgain = 1.92124  1.95285  2.19573  2.14414  2.18379  1.7457  1.84938  1.66466  1.60761  1.52898  
+sbs.uvagem.m5.ugain = 1.78968  1.48341  1.30163  1.13717  0.970207  1.00058  0.965473  1  0.986568  0.939703  0.947555  0.97523  
+sbs.uvagem.m6.vgain = 2.37968  2.46397  2.54299  2.49859  2.15264  1.39457  1.56102  1.51429  1.51964  1.41913  
+sbs.uvagem.m6.ugain = 1.03725  1.00941  0.968329  0.992958  1.02323  1.02516  1.05694  1.01217  1  1.03818  1.10843  1.24697  
+sbs.uvagem.m7.vgain = 1.55879  1.78119  1.62277  1.72863  1.45366  1.6967  1.85538  1.81912  2.08753  1.77262  
+sbs.uvagem.m7.ugain = 1.00262  1.02028  0.997283  0.985335  1.05133  1.04763  1.00661  1  1.13253  1.40968  1.70059  2.4817  
+sbs.uvagem.m8.vgain = 1.27443  1.31059  1.32756  1.3818  1.32722  1.15996  1.20626  1.18122  1.21389  1.23469  
+sbs.uvagem.m8.ugain = 1  1.3628  1.15651  1.06324  0.968241  0.999911  1  0.970434  0.959909  0.946733  0.965587  0.971839  
+sbs.uvagem.m9.vgain = 1.29907  1.26888  1.36309  1.24364  1.19304  1.18312  1.23907  1.51668  1.48435  1.55725  
+sbs.uvagem.m9.ugain = 1.31498  1.11734  1.03533  0.93333  1.04675  1.03017  1  0.971993  0.92147  0.986946  0.926448  0.975326  
+sbs.uvagem.m10.vgain = 1.074  1.29178  1.2533  1.24956  1.23655  1.60482  2.02156  2.07911  2.11828  1.93299  
+sbs.uvagem.m10.ugain = 0.900813  0.93287  0.937152  0.978111  1.01682  1.00257  1  0.985446  1.05271  2.23493  1.08702  1.24624  
+sbs.uvagem.m11.vgain = 1.30907  1.49128  1.37025  1.41647  1.31641  1.55535  1.97674  1.94444  1.82842  1.70222  
+sbs.uvagem.m11.ugain = 1.00905  0.981716  0.998327  1.01035  0.982153  0.969636  1  1.01724  0.995016  0.999698  1.11452  1.24833  
+sbs.uvagem.m12.vgain = 1.58208  1.76037  1.9766  1.83847  1.73907  1.36101  1.52207  1.4479  1.39214  1.43377  
+sbs.uvagem.m12.ugain = 1.58835  1.3302  1.12177  1.00856  0.958833  1  1.01689  1.01024  1.00727  0.950296  0.930473  1.01078  
+sbs.uvagem.m13.vgain = 2.14376  2.13164  2.27091  2.02469  1.90929  1.86484  1.88508  2.28851  2.5202  2.27359  
+sbs.uvagem.m13.ugain = 2.20032  1.62602  1.37963  1.19709  1.0023  1  0.968104  1.09845  1.24339  1.06683  1.0979  1.1077  
+sbs.uvagem.m14.vgain = 1.59628  1.80817  1.56028  1.54985  1.59488  1.90566  2.22385  2.04772  2.08852  1.89375  
+sbs.uvagem.m14.ugain = 0.983576  1.0038  0.915146  0.952049  0.935847  0.974241  1  0.951794  1.04382  1.32894  1.46338  1.73018  
+sbs.uvagem.m15.vgain = 1.4884  1.70439  1.66289  1.63306  1.58417  2.08846  2.58674  2.23948  2.32305  2.3305  
+sbs.uvagem.m15.ugain = 1.02248  1.07965  1.04863  0.976932  0.959607  0.938023  1  0.939435  1.02904  1.06405  1.26673  1.58938  
+sbs.uvagem.m16.vgain = 1.72976  1.79061  1.92534  2.00594  1.71875  1.90461  2.41987  2.0548  2.39708  2.17385  
+sbs.uvagem.m16.ugain = 1.63375  1.29466  1.05052  1  0.864542  0.885016  0.855771  0.838475  0.964666  0.93914  0.889726  0.869567  
+sbs.uvagem.m17.vgain = 1.66148  1.65369  1.77214  1.43848  1.39539  1.66854  1.77537  1.87753  1.74672  1.6276  
+sbs.uvagem.m17.ugain = 1.82609  1.56097  1.27516  1.12128  1.03546  1.0269  1.03137  1.02116  1  0.969879  0.970369  0.896948  
+sbs.uvagem.m18.vgain = 1.27329  1.32808  1.22593  1.38062  1.31206  1.96255  2.18317  2.04775  1.98727  2.03332  
+sbs.uvagem.m18.ugain = 0.930258  0.957411  0.956438  0.967872  1.00052  1.02085  1.02954  1.07107  1  1.10714  1.28244  1.58336  
+sbs.uvagem.m19.vgain = 1.48993  1.53952  1.48524  1.57583  1.53922  1.84279  1.73403  1.82569  1.69434  1.59041  
+sbs.uvagem.m19.ugain = 0.924727  0.840348  0.857468  0.928525  0.910144  0.877298  0.898668  0.877391  1  0.947884  1.10372  1.18318  
 
 # Module average gains relative to target ADC peak position of 4000
-sbs.uvagem.m0.modulegain = 1.33663
-sbs.uvagem.m1.modulegain = 0.559002
-sbs.uvagem.m2.modulegain = 1.40356
-sbs.uvagem.m3.modulegain = 0.724373
-sbs.uvagem.m4.modulegain = 0.484744
-sbs.uvagem.m5.modulegain = 1.59029
-sbs.uvagem.m6.modulegain = 1.17677
-sbs.uvagem.m7.modulegain = 0.766759
-sbs.uvagem.m8.modulegain = 0.899921
-sbs.uvagem.m9.modulegain = 1.16924
-sbs.uvagem.m10.modulegain = 1.21193
-sbs.uvagem.m11.modulegain = 1.69707
-sbs.uvagem.m12.modulegain = 0.523743
-sbs.uvagem.m13.modulegain = 2.17928
-sbs.uvagem.m14.modulegain = 0.938256
-sbs.uvagem.m15.modulegain = 0.548284
-sbs.uvagem.m16.modulegain = 0.796485
-sbs.uvagem.m17.modulegain = 0.884161
-sbs.uvagem.m18.modulegain = 0.771596
-sbs.uvagem.m19.modulegain = 0.861157
+sbs.uvagem.m0.modulegain = 0.903112
+sbs.uvagem.m1.modulegain = 0.866192
+sbs.uvagem.m2.modulegain = 0.80123
+sbs.uvagem.m3.modulegain = 0.856383
+sbs.uvagem.m4.modulegain = 0.649482
+sbs.uvagem.m5.modulegain = 0.684177
+sbs.uvagem.m6.modulegain = 0.672016
+sbs.uvagem.m7.modulegain = 0.71823
+sbs.uvagem.m8.modulegain = 0.892906
+sbs.uvagem.m9.modulegain = 0.859176
+sbs.uvagem.m10.modulegain = 0.746765
+sbs.uvagem.m11.modulegain = 0.808885
+sbs.uvagem.m12.modulegain = 0.796369
+sbs.uvagem.m13.modulegain = 0.618302
+sbs.uvagem.m14.modulegain = 0.700376
+sbs.uvagem.m15.modulegain = 0.72406
+sbs.uvagem.m16.modulegain = 0.650038
+sbs.uvagem.m17.modulegain = 0.732239
+sbs.uvagem.m18.modulegain = 0.74478
+sbs.uvagem.m19.modulegain = 0.792559
 
 
 

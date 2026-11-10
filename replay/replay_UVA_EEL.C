@@ -13,13 +13,13 @@
 
 void replay_UVA_EEL( int runnum=2811, int firstsegment=0, int maxsegments=1, long firstevent=0, long nevents=-1 ){
 
-    gSystem->Load("libsbs.so");
-
-    SBSBigBite   *sbs = new SBSBigBite("sbs", "Generic apparatus");
-    //SBSGEMStand *gems = new SBSGEMStand("gems", "Collection of GEMs in stand");
-    SBSGEMSpectrometerTracker *uvagem = new SBSGEMSpectrometerTracker("uvagem", "5-layer cosmic test stand");
+  //  gSystem->Load("libsbs.so"); (no longer necessary with standard .rootrc file)  
+  
+  SBSBigBite   *sbs = new SBSBigBite("sbs", "Generic apparatus");
+  //SBSGEMStand *gems = new SBSGEMStand("gems", "Collection of GEMs in stand");
+  SBSGEMSpectrometerTracker *uvagem = new SBSGEMSpectrometerTracker("uvagem", "5-layer cosmic test stand");
     
-    sbs->AddDetector(uvagem);
+  sbs->AddDetector(uvagem);
 
   //
   //  Steering script for Hall A analyzer demo
@@ -32,8 +32,8 @@ void replay_UVA_EEL( int runnum=2811, int firstsegment=0, int maxsegments=1, lon
   // Collect information about a easily modified random set of channels
   // (see DB_DIR/*/db_D.dat)
   /*
-  THaApparatus* DECDAT = new THaDecData("D","Misc. Decoder Data");
-  gHaApps->Add( DECDAT );
+    THaApparatus* DECDAT = new THaDecData("D","Misc. Decoder Data");
+    gHaApps->Add( DECDAT );
   */
   
 
@@ -98,10 +98,20 @@ void replay_UVA_EEL( int runnum=2811, int firstsegment=0, int maxsegments=1, lon
   cout << "n segments to analyze = " << segcounter << endl;
   
   prefix = gSystem->Getenv("OUT_DIR");
-
+  TString log_prefix = gSystem->Getenv("LOG_DIR");
+  
   TString outfilename;
-  outfilename.Form( "%s/sbs_uvagem_replayed_%d_seg%d_%d.root", prefix.Data(), runnum,
-		    firstsegment, lastsegment );
+  TString logfilename;
+
+  if( nevents > 0 ){
+    outfilename.Form( "%s/sbs_uvagem_replayed_%d_seg%d_%d_firstevent%ld_nevent%ld.root", prefix.Data(), runnum,
+		      firstsegment, lastsegment, firstevent, nevents );
+    logfilename.Form( "%s/sbs_uvagem_replayed_%d_seg%d_%d_firstevent%ld_nevent%ld.log", log_prefix.Data(), runnum,
+		      firstsegment, lastsegment, firstevent, nevents );
+  } else {
+    outfilename.Form( "%s/sbs_uvagem_fullreplay_%d_seg%d_%d.root", prefix.Data(), runnum, firstsegment, lastsegment );
+    logfilename.Form( "%s/sbs_uvagem_fullreplay_%d_seg%d_%d.log", log_prefix.Data(), runnum, firstsegment, lastsegment );
+  }
 
   // Define the run(s) that we want to analyze.
   // We just set up one, but this could be many.
@@ -122,7 +132,7 @@ void replay_UVA_EEL( int runnum=2811, int firstsegment=0, int maxsegments=1, lon
   analyzer->SetEvent( event );
   analyzer->SetOutFile( outfilename.Data() );
   // File to record cuts accounting information
-  analyzer->SetSummaryFile("summary_example.log"); // optional
+  analyzer->SetSummaryFile( logfilename.Data() ); // optional
 
   prefix = gSystem->Getenv("SBS_REPLAY");
   prefix += "/replay/";
@@ -142,7 +152,7 @@ void replay_UVA_EEL( int runnum=2811, int firstsegment=0, int maxsegments=1, lon
 
   for( int iseg=0; iseg<filelist->GetEntries(); iseg++ ){
     THaRun *run = ( (THaRun*) (*filelist)[iseg] );
-    if( nevents > 0 ) run->SetLastEvent(nevents); //not sure if this will work as we want it to for multiple file segments chained together
+    if( nevents > 0 ) run->SetLastEvent(nevents+firstevent-1); //not sure if this will work as we want it to for multiple file segments chained together
 
     run->SetFirstEvent( firstevent );
     

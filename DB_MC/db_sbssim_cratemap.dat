@@ -1,5 +1,8 @@
 # Date/Time = Tue Aug  23 11:00:00 2005
 
+# does it help to put a time-stamp in here?
+---------[ 2021-01-01 00:00:00 ] 
+
 #==== Crate 4 type fastbus
 # ADCs (And optional TDCs) for BBPS, BBSH
 # slot  model   clear   header  mask    nchan   ndata

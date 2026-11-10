@@ -391,8 +391,15 @@ sbs.gemangles_xyz = 0 0 0
 
 # after global alignment of the GEM stack, also based on straight-through data (not immediately obvious that this is somehow "better"):
 
-sbs.gemorigin_xyz =   0.00295174  0.000299866      4.10704
-sbs.gemangles_xyz =  -0.00627814    0.0419374   -0.0825597
+#sbs.gemorigin_xyz =   0.00295174  0.000299866      4.10704
+#sbs.gemangles_xyz =  -0.00627814    0.0419374   -0.0825597
+
+# 
+#sbs.gemorigin_xyz =   0.00187624  6.43129e-05      4.10902
+#sbs.gemangles_xyz =  -0.00425619    0.0299407   -0.0851508
+
+sbs.gemorigin_xyz =  -0.00110715 -0.000899033      4.10922
+sbs.gemangles_xyz =   0.00902365   -0.0118649   -0.0807882
 
 
 # the following lines enable use of the "polarimeter mode" analysis:
