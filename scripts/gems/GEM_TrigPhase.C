@@ -431,6 +431,21 @@ void GEM_TrigPhase( const char *configfilename, const char *outfilename = "GEM_T
   //To keep it simple, we only allow this to run for one "tracker" at a time: 
   C->SetBranchStatus(Form("%s.track.*",trackername.Data()),1);
   C->SetBranchStatus(Form("%s.hit.*",trackername.Data()),1);
+
+  if( expname.EqualTo("gep") ){
+    //in GEP case, activate FT (FPP) track and hit branches for FPP (FT):
+    if( trackername.EqualTo("sbs.gemFPP") ){
+      //also activate FT branches:
+      C->SetBranchStatus("sbs.gemFT.track.*",1);
+      C->SetBranchStatus("sbs.gemFT.hit.*",1);
+    }
+    if( trackername.EqualTo("sbs.gemFT") ){
+      C->SetBranchStatus("sbs.gemFPP.track.*",1);
+      C->SetBranchStatus("sbs.gemFPP.hit.*",1);
+    }
+  }
+      
+    
   
   //Now: branches we actually need to set addresses for:
   double hit_ADCmaxstripU[MAXNHITS];
