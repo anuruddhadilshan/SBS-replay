@@ -963,9 +963,9 @@ sbs.gemFT.do_goodADC_tracking = 1
 # Per-strip RMS and per-APV CM calibration come from the digitizer calibration.
 # The existing mode-3 configuration is retained. For modes 1 or 2, change
 # mc_input_mode to describe the actual input; it sets the online ZS state.
-sbs.gemFT.pedfile = gemped/ft_mc_pedestal_rms.dat
-sbs.gemFT.cmfile = gemped/ft_mc_commonmode.dat
-sbs.gemFT.mc_input_mode = 3
+sbs.gemFT.pedfile = gemped/pedrun5514_ft_MCreplayDB_Ped.dat
+sbs.gemFT.cmfile = gemped/pedrun5514_ft_MCreplayDB_CM.dat
+sbs.gemFT.mc_input_mode = 1
 sbs.gemFT.commonmode_flag = 0
 sbs.gemFT.correct_common_mode = 0
 # Preserved existing flag: mode 3 overrides it to false (full readout).
@@ -974,7 +974,7 @@ sbs.gemFT.zerosuppress = 1
 sbs.gemFT.pedsub_online = 1
 sbs.gemFT.pedestalmode = 0
 # Optional CM diagnostics for new digitization; enable when needed:
-# sbs.gemFT.plot_common_mode = 1
+sbs.gemFT.plot_common_mode = 1
 # ------------------------- END PROFILE A -------------------------------------
 
 # ------------- BEGIN PROFILE B: LEGACY FULL READOUT (COMMENTED) ---------------
